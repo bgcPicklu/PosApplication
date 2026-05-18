@@ -1,0 +1,89 @@
+﻿@using PosApplication.Models;
+@model PosApplication.Models.RegisterViewModel
+
+<div style="margin-top: 90px;">
+    <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+        <div class="panel panel-bd lobidisable">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h4>Create a New Account</h4>
+                </div>
+            </div>
+            <div style="height: 97%; width: 100%; overflow: auto; padding: 0; margin: 0 auto; margin-left: 10px; margin-top: 10px;">
+                @Html.AntiForgeryToken()
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="row" style="margin-bottom:10px;">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            @Html.Label("User Name :", new { @style = "font-size: 12px;" })
+                        </div>
+                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @id="UserName" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="row" style="margin-bottom:10px;">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            @Html.Label("Password :", new { @style = "font-size: 12px;" })
+                        </div>
+                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @id = "Password" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="row" style="margin-bottom:10px;">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            @Html.Label("Confirm Password :", new { @style = "font-size: 12px;" })
+                        </div>
+                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @id = "ConfirmPassword" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="row" style="margin-bottom:10px;">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            @Html.Label("Account Type :", new { @style = "font-size: 12px;" })
+                        </div>
+                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                            @Html.DropDownListFor(m => m.AccountType, new SelectList(DropDownListModel.GetAccountType,"Value","Text","0"), new { @class = "form-control", @id = "AccountType" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="row" style="margin-bottom:10px;">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        </div>
+                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                            <input type="button" class="btn btn-primary pull-right" id="btnRegister" value="Register" style="margin-right: 25px;" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#btnRegister').click(function () {
+                $.ajax({
+                    url: '@Url.Action("Register","Account")',
+                    type: "POST",
+                    data: { UserName: $('#UserName').val(), Password: $('#Password').val(), ConfirmPassword: $('#ConfirmPassword').val(), AccountType: $('#AccountType').val() },
+                    success: function (data) {
+                        if (data.success)
+                            $.notify("Create new user successfully", "success");
+                    }
+                });
+            });
+        });
+    </script>
+}

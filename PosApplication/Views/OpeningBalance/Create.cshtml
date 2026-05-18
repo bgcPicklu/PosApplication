@@ -1,0 +1,660 @@
+﻿@using PosApplication.Models;
+@model PosApplication.Models.OpeningBalanceMasterModel
+<div style="margin-top: 90px;">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin: auto;">
+        <div class="panel panel-bd lobidisable">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h4>Opening Balance Entry</h4>
+                </div>
+            </div>
+            <div style="height:97%; width:100%; overflow:auto; padding:0; margin:0 auto; margin-left:10px; margin-top:10px;">
+                @Html.AntiForgeryToken()
+                <input type="button" id="btnFind" value="Find" class="btn btn-primary" />
+                <hr />
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top:10px;">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top:10px;">
+                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-5 col-md-5 col-sm-4 col-xs-4">
+                                        @Html.Label("Opening Date:", new { @class = "control-label", @style = "font-size:10px;" })
+                                    </div>
+                                    <div class="col-lg-7 col-md-7 col-sm-8 col-xs-8">
+                                        @Html.TextBoxFor(model => model.dOpeningDate, new { @class = "form-control", @id = "OpeningDate", @readonly = "readonly", @style = "background: #fff;" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-5 col-md-5 col-sm-4 col-xs-4">
+                                        @Html.Label("Reference No:", new { @class = "control-label", @style = "font-size:10px;" })
+                                    </div>
+                                    <div class="col-lg-7 col-md-7 col-sm-8 col-xs-8">
+                                        @Html.TextBoxFor(model => model.vReferenceNo, new { @class = "form-control", @id = "ReferenceNo", @readonly = "readonly", @style = "background: #fff;" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-4 col-xs-4">
+                                        @Html.Label("Opening Refrence:", new { @class = "control-label", @style = "font-size:10px;" })
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-8 col-xs-8">
+                                        @Html.TextBoxFor(model => model.vChallanNo, new { @class = "form-control", @id = "ChallanNo" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
+                                        <div class="row">
+                                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                                                <input type="button" value="Proceed" class="btn btn-primary pull-left" id="btnProceed" style="font-size: 12px;" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top:10px;">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top:20px;">
+                            <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                        @Html.Label("Supplier Name:", new { @class = "control-label", @style = "font-size:10px;" })
+                                    </div>
+                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                        @Html.DropDownListFor(model => model.vSupplierId, new SelectList(DropDownListModel.GetSupplier, "Value", "Text", "0"), new { @class = "form-control", @id = "SupplierId", @disabled = true })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                        @Html.Label("Pack Size:", new { @class = "control-label", @style = "font-size:10px;" })
+                                    </div>
+                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                        @Html.DropDownListFor(model => model.vPackSize, new SelectList(DropDownListModel.GetPackSize, "Value", "Text", "0"), new { @class = "form-control", @id = "PackId", @disabled = true })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top:10px;">
+                    <div class="row" style="max-height: 500px; overflow: auto;">
+                        <table class="table table-responsive table-striped table-bordered table-hover table-condensed" style="width: 98%;">
+                            <thead style="background: #1088b9; color: white;">
+                                <tr>
+                                    <th style="text-align: center; width: 23%; font-size: 8px;">Product Name</th>
+                                    <th style="text-align: center; width: 4%; font-size: 8px;">Pack</th>
+                                    <th style="text-align: center; width: 6%; font-size: 8px;">Max Qty</th>
+                                    <th style="text-align: center; width: 6%; font-size: 8px;">Min Qty</th>
+                                    <th style="text-align: center; width: 6%; font-size: 8px;">C.Stock</th>
+                                    <th style="text-align: center; width: 6%; font-size: 8px; ">LU Qty.</th>
+                                    <th style="text-align: center; width: 6%; font-size: 8px;">SU Qty.</th>
+                                    <th style="text-align: center; width: 5%; font-size: 8px; ">P.Rate</th>
+                                    <th style="text-align: center; width: 6%; font-size: 8px; ">Amount</th>
+                                    <th style="text-align: center; width: 5%; font-size: 8px;">S.Rate</th>
+                                    <th style="width: 3%; font-size: 10px;"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="width: 23%;">
+                                        <select id="productID" class="form-control" disabled="disabled">
+                                            <option>--Select--</option>
+                                        </select>
+                                    </td>
+                                    <td style="width: 4%;">
+                                        <label id="packName" style="font-size: 10px; font-weight:normal; text-align:right; width: 100%;"></label>
+                                    </td>
+                                    <td style="width: 6%;">
+                                        <label id="MaxQty" style="font-size: 10px; font-weight: normal; text-align: right; width: 100%; "></label>
+                                    </td>
+                                    <td style="width: 6%;">
+                                        <label id="MinQty" style="font-size: 10px; font-weight: normal; text-align: right; width: 100%; "></label>
+                                    </td>
+                                    <td style="width: 5%;">
+                                        <label id="currentStock" style="font-size: 10px; font-weight: normal; text-align: right; width: 100%; "></label>
+                                    </td>
+                                    <td style="width: 6%;">
+                                        <input type="text" id="luQty" class="form-control" disabled="disabled" style="text-align: right; margin-right: 20%;" />
+                                    </td>
+                                    <td style="width: 6%;">
+                                        <input type="text" id="suQty" class="form-control" disabled="disabled" style="text-align: right; margin-right: 20%;" />
+                                    </td>
+                                    <td style="width: 8%;">
+                                        <input type="text" id="purchaseRate" class="form-control" disabled="disabled" style="text-align: right; margin-right: 20%;" />
+                                    </td>
+                                    <td style="width: 6%;">
+                                        <label id="vAmount" style="font-size: 10px; font-weight: normal; text-align: right; width: 100%; "></label>
+                                    </td>
+                                    <td style="width: 5%;">
+                                        <label id="SalesRate" style="font-size: 10px; font-weight: normal; text-align: right; width: 100%; "></label>
+                                    </td>
+                                    <td style="width: 3%;">
+                                        <input type="button" class="btn btn-success" value="Add" id="btnAddEdit" style="width: 60px; float: right; font-size: 12px;" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top:10px;">
+                    <div class="row" style="max-height: 500px; overflow: auto;">
+                        <table class="table table-responsive table-striped table-bordered table-hover table-condensed" id="tbProduct" style="width: 98%;">
+                            <thead style="background: #1088b9; color: white;">
+                                <tr>
+                                    <th style="display: none; font-size: 8px;">Product ID</th>
+                                    <th style="text-align: center; width: 18%; font-size: 8px;">Product Name</th>
+                                    <th style="text-align: center; width: 4%; font-size: 8px;">Pack</th>
+                                    <th style="text-align: center; width: 6%; font-size: 8px;">Max Qty</th>
+                                    <th style="text-align: center; width: 6%; font-size: 8px;">Min Qty</th>
+                                    <th style="text-align: center; width: 6%; font-size: 8px;">C.Stock</th>
+                                    <th style="text-align: center; width: 6%; font-size: 8px; ">LU Qty.</th>
+                                    <th style="text-align: center; width: 6%; font-size: 8px;">SU Qty.</th>
+                                    <th style="text-align: center; width: 5%; font-size: 8px; ">P.Rate</th>
+                                    <th style="text-align: center; width: 6%; font-size: 8px; ">Amount</th>
+                                    <th style="text-align: center; width: 5%; font-size: 8px;">S.Rate</th>
+                                    <th style="width: 11%; font-size: 10px;"></th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="8" style="width: 100%; text-align: right; font-size: 10px;">Total = </td>
+                                    <td><label id="totalAmount" style="text-align: right; width: 100%; font-size: 10px;"></label></td>
+                                    <td colspan="2"></td>
+                                </tr>
+                            </tfoot>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top:10px;">
+                        <div class="row">
+                            <div class="col-lg-1 col-md-1 col-sm-4 col-xs-4">
+                                @Html.Label("Remarks:", new { @class = "control-label", @style = "font-size:10px;" })
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                @Html.TextBoxFor(model => model.vRemarks, new { @class = "form-control", @id = "Remarks" })
+                            </div>
+                        </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top:10px;">
+                    <div class="row" style="margin-top: 5px; margin-bottom: 5px;">
+                        <div class="col-sm-4 col-xs-2"></div>
+                        <div class="col-sm-2 col-xs-4">
+                            <input type="button" value="Submit" id="btnSubmit" class="btn btn-success" style="width: 99%; max-width: 70px; float: right; font-size: 12px;" />
+                        </div>
+                        <div class="col-sm-2 col-xs-4">
+                            <input type="button" value="Reset" id="btnReset" class="btn btn-success" style="width: 99%; max-width: 70px; float: left; font-size: 12px;" />
+                        </div>
+                    </div>
+                </div>
+
+                <div></div>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="vReferenceNoAuto" />
+@section Scripts{
+    <script type="text/javascript">
+
+        $('#OpeningDate').datepicker({
+            dateFormat: 'dd-mm-yy',
+            showStatus: true,
+            showWeeks: true,
+            changeMonth: true,
+            changeYear: true,
+            showButtionPanel: true,
+            highlightWeek: true,
+            autoclose: true,
+            onSelect: function (dateText) {
+                $(this).change();
+            }
+        }).on('change', function () {
+            $.ajax({
+                url: '@Url.Action("getReferenceNo","OpeningBalance")',
+                type: 'GET',
+                data: { dDate: $(this).val() },
+                success: function (data) {
+                    $('#ReferenceNo').val(data.vReferenceNo);
+                }
+            });
+        });
+
+        var productName = [];
+        var dupProduct = [];
+
+        function renderProductName(element, productName) {
+            var $ele = $(element);
+            $ele.empty();
+            $ele.append($('<option/>').val('0').text('--Select--'));
+            $.each(productName, function (i, val) {
+                $ele.append($('<option/>').val(val.vProductID).text(val.vProductName));
+            });
+        }
+
+        function loadProductName(element) {
+            debugger;
+            var supplierID = $('#SupplierId').val();
+            if (supplierID == 0)
+                supplierID = '%';
+            var packID = $('#PackId').val();
+            if (packID == 0)
+                packID = '%';
+            $.ajax({
+                url: '@Url.Action("GetAllProduct", "OpeningBalance")',
+                type: "GET",
+                data: { supplierID: supplierID, packID: packID, ReferenceNoAuto: $('#vReferenceNoAuto').val() },
+                success: function (data) {
+                    productName = data;
+                    renderProductName(element, productName);
+                }
+            });
+        }
+
+        @*$('#ChallanNo').change(function () {
+            if ($('#vReferenceNoAuto').val().length > 0)
+            {
+                $.ajax({
+                    url: '@Url.Action("checkBillNo", "OpeningBalance")',
+                    type: 'POST',
+                    data: { ReferenceNo: $(this).val(), ReferenceNoAuto: $('#ReferenceNo').val() },
+                    success: function (data) {
+                        if (data.success) {
+                            $('#ReferenceNo').val('');
+                            $('#ReferenceNo').notify("Reference No. already exists!", "warn");
+                        }
+                    }
+                });
+            }
+        });*@
+
+        $('#SupplierId').change(function () {
+            loadProductName($('#productID'));
+        });
+
+        $('#PackId').change(function () {
+            loadProductName($('#productID'));
+        });
+
+        $('#btnReset').click(function () {
+            window.location.href = '@Url.Action("Create", "OpeningBalance")';
+        });
+
+        $('#productID').change(function () {
+            debugger;
+            $('#SupplierId').val('0');
+            $('#packName').text('');
+            $('#MaxQty').text('');
+            $('#MinQty').text('');
+            $('#currentStock').text('');
+            $('#SalesRate').text('');
+            $.getJSON('@Url.Action("GetProductData", "OpeningBalance")', { vProductID: $(this).val(),dOpeningDate: $('#OpeningDate').val() }, function (res) {
+                $('#packName').text(res.packID);
+                $('#MaxQty').text(res.largeUnit);
+                $('#MinQty').text(res.smallUnit);
+                $('#currentStock').text(res.currentStock);
+                $('#SalesRate').text(res.salesRate);
+            });
+        });
+
+        $('#luQty').change(function () {
+            amountCalculation();
+        });
+
+        $('#suQty').change(function () {
+            amountCalculation();
+        });
+
+        $('#purchaseRate').change(function () {
+            amountCalculation();
+        });
+
+        //$('#VATPercentage').change(function () {
+        //    purchaseRateCalculation();
+        //    purchaseRateMainTable();
+        //    MainTableTotalCalculation();
+
+        //    var vatPer = (isNaN(parseFloat($(this).val())) ? 0 : parseFloat($(this).val()));
+        //    $('#TotalVatAmount').prop('disabled', false);
+        //    $('#TotalVatAmount').val($('#totalVAT').text());
+        //    if (vatPer > 0)
+        //        $('#TotalVatAmount').prop('disabled', true);
+        //    $('#btnProceed').focus();
+        //});
+
+        //$('#discount').change(function () {
+        //    purchaseRateCalculation();
+        //});
+
+        //$('#totalDiscount').change(function () {
+        //    var discountAmount = parseFloat($('#totalDiscount').val());
+        //    var totalDiscount = 0.0;
+        //    var totalNetAmount = 0.0;
+        //    $('#tbProduct tbody').find('tr').each(function (i, event) {
+        //        var $tdValue = $(this).find('td');
+        //        $tdValue.eq(11).text(((parseFloat($tdValue.eq(10).text()) / parseFloat($('#totalVATWithAmount').text())) * parseFloat($('#totalDiscount').val())).toFixed(2));
+        //        $tdValue.eq(12).text((parseFloat($tdValue.eq(10).text()) - parseFloat($tdValue.eq(11).text())).toFixed(2));
+        //        totalDiscount += parseFloat($tdValue.eq(11).text());
+        //        totalNetAmount += parseFloat($tdValue.eq(12).text());
+        //    });
+        //    $('#totalDiscountAmount').text(totalDiscount.toFixed(2));
+        //    $('#totalAmountValue').text(totalNetAmount.toFixed(2));
+        //});
+
+        function amountCalculation() {
+            var luQty = 0.0;
+            var suQty = 0.0;
+            var amount = 0.0;
+            var discount = 0.0;
+            var vatPercentage = 0.0;
+            if (!isNaN(parseFloat($('#luQty').val()))) {
+                luQty = parseFloat($('#luQty').val());
+            }
+            if (!isNaN(parseFloat($('#suQty').val()))) {
+                suQty = parseFloat($('#suQty').val());
+            }
+            if (!isNaN(parseFloat($('#discount').val()))) {
+                discount = parseFloat($('#discount').val());
+            }
+            if (!isNaN(parseFloat($('#purchaseRate').val()))) {
+                amount = parseFloat($('#purchaseRate').val());
+            }
+            if (luQty == 0 && suQty == 0) {
+                $('#purchaseRate').val('');
+            }
+            else
+            {
+                var purchaseRate = ((luQty * (parseFloat($('#MaxQty').text()) * parseFloat($('#MinQty').text()))) + suQty) * parseFloat($('#purchaseRate').val());
+                $('#vAmount').text((!isNaN(purchaseRate)?purchaseRate:0).toFixed(2));
+            }
+        }
+
+        //function purchaseRateMainTable() {
+        //    var vatPercentage = 0.0;
+        //    if (!isNaN(parseFloat($('#VATPercentage').val()))) {
+        //        vatPercentage = parseFloat($('#VATPercentage').val());
+        //    }
+        //    $('#tbProduct tbody').find('tr').each(function (i, event) {
+        //        var $tdValue = $(this).find('td');
+        //        $tdValue.eq(9).text(((vatPercentage * parseFloat($tdValue.eq(8).text())) / 100).toFixed(2));
+        //        $tdValue.eq(10).text((parseFloat($tdValue.eq(9).text()) + parseFloat($tdValue.eq(8).text())).toFixed(2));
+        //        $tdValue.eq(12).text((parseFloat($tdValue.eq(10).text()) - parseFloat($tdValue.eq(11).text())).toFixed(2));
+        //        $tdValue.eq(13).text((parseFloat($tdValue.eq(12).text()) / ((parseFloat($tdValue.eq(6).text()) * parseFloat($tdValue.eq(3).text()) * parseFloat($tdValue.eq(4).text())) + parseFloat($tdValue.eq(7).text()))).toFixed(2));
+        //    });
+        //}
+
+        //function MainTableTotalCalculation() {
+        //    var totalVat = 0.0;
+        //    var totalVatAmount = 0.0;
+        //    var totalDiscountAmount = 0.0;
+        //    var totalNetAmount = 0.0;
+
+        //    $('#tbProduct tbody').find('tr').each(function (i, event) {
+        //        var $tdValue = $(this).find('td');
+
+        //        totalVat += parseFloat($tdValue.eq(9).text());
+        //        totalVatAmount += parseFloat($tdValue.eq(10).text());
+        //        totalDiscountAmount += parseFloat($tdValue.eq(11).text());
+        //        totalNetAmount += parseFloat($tdValue.eq(12).text());
+        //    });
+
+        //    $('#totalVAT').text(totalVat.toFixed(2));
+        //    $('#totalVATWithAmount').text(totalVatAmount.toFixed(2));
+        //    $('#totalDiscountAmount').text(totalDiscountAmount.toFixed(2));
+        //    $('#totalAmountValue').text(totalNetAmount.toFixed(2));
+        //}
+
+        $('#btnAddEdit').click(function () {
+            var isAllValid = true;
+            if ($('#productID').val() == '0') {
+                isAllValid = false;
+                $('#productID').notify("Please select product Name!!!", "warn");
+            }
+            if (isNaN(parseFloat($('#luQty').val()))) {
+                isAllValid = false;
+                $('#luQty').notify("Please provide large unit qty!!!", "warn");
+            }
+            if (isNaN(parseFloat($('#suQty').val()))) {
+                isAllValid = false;
+                $('#suQty').notify("Please provide small unit qty!!!", "warn");
+            }
+            if (isNaN(parseFloat($('#purchaseRate').val()))) {
+                isAllValid = false;
+                $('#purchaseRate').notify("Please provide purchase rate!!!", "warn");
+            }
+
+            if (parseFloat($('#purchaseRate').val()) > parseFloat($('#SalesRate').text())) {
+                isAllValid = false;
+                $.notify("Purchase rate is greater than sales rate. Please check!!!", "warn");
+            }
+
+            $.each(dupProduct, function (i, value) {
+                if (value == $('#productID').val()) {
+                    isAllValid = false;
+                    $('#productID').notify('Product already exists in the list.', 'warn');
+                    $('#productID').val('0');
+                    $('#packName').text('');
+                    $('#MaxQty').text('');
+                    $('#MinQty').text('');
+                    $('#currentStock').text('');
+                    $('#luQty').val('');
+                    $('#suQty').val('');
+                    $('#purchaseRate').val('');
+                    $('#vAmount').text('');
+                    $('#SalesRate').text('');
+                    $('#productID').focus();
+                }
+            });
+
+            if (isAllValid) {
+                dupProduct.push($('#productID').val());
+                $('#tbProduct tbody').append('<tr id = "mainRow">'+
+                    '<td style="display: none; font-size: 10px;" class="ProductID">' + $('#productID').val() + '</td>' +
+                    '<td style="font-size: 10px;" class="ProductName">' + $('#productID option:selected').text() + '</td>' +
+                    '<td style="font-size: 10px;" class="packName">' + $('#packName').text() + '</td>' +
+                    '<td style="font-size: 10px; text-align: right;" class="MaxQty">' + $('#MaxQty').text() + '</td>' +
+                    '<td style="font-size: 10px; text-align: right;" class="MinQty">' + $('#MinQty').text() + '</td>' +
+                    '<td style="font-size: 10px; text-align: right;" class="currentStock">' + $('#currentStock').text() + '</td>' +
+                    '<td style="font-size: 10px; text-align: right;" class="luQty">' + $('#luQty').val() + '</td>' +
+                    '<td style="font-size: 10px; text-align: right;" class="suQty">' + $('#suQty').val() + '</td>' +
+                    '<td style="font-size: 10px; text-align: right;" class="purchaseRate">' + $('#purchaseRate').val() + '</td>' +
+                    '<td style="font-size: 10px; text-align: right;" class="ProductAmount">' + $('#vAmount').text() + '</td>' +
+                    '<td style="font-size: 10px; text-align: right;" class="SalesRate">' + $('#SalesRate').text() + '</td>' +
+                    '<td><input type = "button" id = "btnRemove" class="btnRemove btn btn-danger" value = "Remove" style="font-size: 8px; width: 60px; margin-right: 10%;" /><input type = "button" id = "btnEdit" class="btnEdit btn btn-success" value = "Edit" style="font-size: 8px;  width: 60px;" /></td></tr>');
+                var grandTotal = parseFloat($('#totalAmount').text());
+                if (isNaN(grandTotal))
+                    grandTotal = 0.0;
+                grandTotal += parseFloat($('#vAmount').text());
+                $('#totalAmount').text(grandTotal.toFixed(2));
+            }
+            $('#productID').val('0');
+            $('#packName').text('');
+            $('#MaxQty').text('');
+            $('#MinQty').text('');
+            $('#currentStock').text('');
+            $('#luQty').val('');
+            $('#suQty').val('');
+            $('#purchaseRate').val('');
+            $('#vAmount').text('');
+            $('#SalesRate').text('');
+            $('#productID').focus();
+            $('#SupplierId').val('0');
+            loadProductName($('#productID'));
+        });
+
+        $('#tbProduct').on('click', '.btnRemove', function () {
+            var grandTotal = parseFloat($('#totalAmount').text());
+            grandTotal -= parseFloat($(this).parents('tr').find('.ProductAmount').text());
+            $('#totalAmount').text(grandTotal);
+            $(this).parents('tr').remove();
+            dupProduct = [];
+            $('#tbProduct tbody').find('tr').each(function (i, event) {
+                var $td = $(this).find('td');
+                dupProduct.push($td.eq(0).text());
+            });
+        });
+
+        $('#tbProduct').on('click', '.btnEdit', function () {
+            $('#productID').val($(this).parents('tr').find('.ProductID').text());
+            $('#packName').text($(this).parents('tr').find('.packName').text());
+            $('#MaxQty').text($(this).parents('tr').find('.MaxQty').text());
+            $('#MinQty').text($(this).parents('tr').find('.MinQty').text());
+            $('#currentStock').text($(this).parents('tr').find('.currentStock').text());
+            $('#luQty').val($(this).parents('tr').find('.luQty').text());
+            $('#suQty').val($(this).parents('tr').find('.suQty').text());
+            $('#purchaseRate').val($(this).parents('tr').find('.purchaseRate').text());
+            $('#vAmount').text($(this).parents('tr').find('.ProductAmount').text());
+            $('#SalesRate').text($(this).parents('tr').find('.SalesRate').text());
+            var grandTotal = parseFloat($('#totalAmount').text());
+            grandTotal -= parseFloat($(this).parents('tr').find('.ProductAmount').text());
+            $('#totalAmount').text(grandTotal.toFixed(2));
+            $(this).parents('tr').remove();
+            dupProduct = $.grep(dupProduct, function (value) { return value != $('#productID').val(); });
+        });
+
+        $('#btnProceed').click(function () {
+            var date = $('#OpeningDate').val();
+            var ReferenceNo = $('#ReferenceNo').val();
+            debugger;
+            $('#tbProduct tbody').empty();
+            $('#totalAmount').text('0.00');
+            var tableData = [];
+            dupProduct = [];
+            var total_Amount = 0.0;
+            $.ajax({
+                url: '@Url.Action("getDataForEdit", "OpeningBalance")',
+                data: { dDate: date, ReferenceNoAuto: $('#vReferenceNoAuto').val(), vReferenceNo: $('#ReferenceNo').val(), vChallanNo: $('#ChallanNo').val() },
+                type: 'GET',
+                success: function (data) {
+                    $('#OpeningDate').val(data.masterData.dOpeningDate);
+                    $('#vReferenceNoAuto').val(data.masterData.vReferenceNoAuto);
+                    $('#ReferenceNo').val(data.masterData.vReferenceNo);
+                    $('#ChallanNo').val(data.masterData.vChallanNo);
+                    $('#totalAmount').text(data.masterData.mTotalAmount);
+                    $('#Remarks').val(data.masterData.vRemarks);
+                    tableData = data.detailData;
+                    $.each(tableData, function (i, value) {
+                        dupProduct.push(value.vProductId);
+                        $('#tbProduct').append('<tr id = "mainRow">' +
+                    '<td style="display: none; font-size: 10px;" class="ProductID">' + value.vProductId + '</td>' +
+                    '<td style="font-size: 10px;" class="ProductName">' + value.vProductName + '</td>' +
+                    '<td style="font-size: 10px;" class="packName">' + value.vPackName + '</td>' +
+                    '<td style="font-size: 10px; text-align: right;" class="MaxQty">' + value.mMaxQty + '</td>' +
+                    '<td style="font-size: 10px; text-align: right;" class="MinQty">' + value.mMinQty + '</td>' +
+                    '<td style="font-size: 10px; text-align: right;" class="currentStock">' + value.mCurrentStock + '</td>' +
+                    '<td style="font-size: 10px; text-align: right;" class="luQty">' + value.mLuQty + '</td>' +
+                    '<td style="font-size: 10px; text-align: right;" class="suQty">' + value.mSuQty + '</td>' +
+                    '<td style="font-size: 10px; text-align: right;" class="purchaseRate">' + value.mPurchaseRate + '</td>' +
+                    '<td style="font-size: 10px; text-align: right;" class="ProductAmount">' + value.TotalAmount + '</td>' +
+                    '<td style="font-size: 10px; text-align: right;" class="SalesRate">' + value.mSalesRate + '</td>' +
+                    '<td><input type = "button" id = "btnRemove" class="btnRemove btn btn-danger" value = "Remove" style="font-size: 8px; width: 60px; margin-right: 10%;" /><input type = "button" id = "btnEdit" class="btnEdit btn btn-success" value = "Edit" style="font-size: 8px;  width: 60px;" /></td></tr>');
+                    });
+                    loadProductName($('#productID'));
+                }
+            });
+
+            $('#SupplierId').prop('disabled', false);
+            $('#PackId').prop('disabled', false);
+            $('#productID').prop('disabled', false);
+            $('#luQty').prop('disabled', false);
+            $('#suQty').prop('disabled', false);
+            $('#purchaseRate').prop('disabled', false);
+        });
+
+        function validityCheck() {
+            var validity = false;
+            if ($('#OpeningDate').val()) {
+                if ($('#ReferenceNo').val()) {
+                    $('#tbProduct tbody').find('tr').each(function (i, event) {
+                        var $td = $(this).find('td');
+                        if (parseFloat($td.eq(8).text()) < parseFloat($td.eq(10).text())) {
+                            validity = true;
+                        }
+                        else {
+                            $.notify('Please check purchase rate & sale rate!', 'warn');
+                            validity = false;
+                        }
+                    });
+                } else {
+                    $('#ReferenceNo').notify('Please provide opening reference!', 'warn');
+                    $('#ReferenceNo').focus();
+                    validity = false;
+                }
+            } else {
+                $('#OpeningDate').notify('Please provide opening data!', 'warn');
+                $('#OpeningDate').focus();
+                validity = false;
+            }
+            return validity;
+        }
+
+        var totalData = [];
+        $('#btnSubmit').click(function () {
+            $('#tbProduct tbody').find('tr').each(function (i, event) {
+                var $td = $(this).find('td');
+                totalData.push({
+                    vProductId: $td.eq(0).text(),
+                    mLuQty: ($td.eq(6).text()),
+                    mSuQty: ($td.eq(7).text()),
+                    mCurrentStock: ($td.eq(5).text()),
+                    mTotalQty: ((parseFloat($td.eq(6).text()) * parseFloat($td.eq(3).text()) * parseFloat($td.eq(4).text())) + parseFloat($td.eq(7).text())),
+                    mPurchaseRate: ($td.eq(8).text()),
+                    TotalAmount: ($td.eq(9).text()),
+                    mSalesRate: ($td.eq(10).text())
+                });
+            });
+
+            debugger;
+            if (validityCheck()) {
+                if (totalData.length != 0) {
+                    bootbox.confirm('Do you want to save this information?', function (result) {
+                        if (result) {
+                            $.ajax({
+                                url: '@Url.Action("Create", "OpeningBalance")',
+                                type: "POST",
+                                data: JSON.stringify({
+                                    dOpeningDate: $('#OpeningDate').val(),
+                                    vChallanNo: $('#ChallanNo').val(),
+                                    vReferenceNoAuto: $('#vReferenceNoAuto').val(),
+                                    vReferenceNo: $('#ReferenceNo').val(),
+                                    vRemarks: $('#Remarks').val(),
+                                    mTotalAmount: $('#totalAmount').text(),
+                                    OpeningDetailsList: totalData
+                                }),
+                                dataType: "JSON",
+                                contentType: 'application/json',
+                                success: function (response) {
+                                    if(response.success)
+                                    {
+                                        totalData = [];
+                                        $.notify(response.message, "success");
+                                        window.setTimeout(function () { window.location.href = '@Url.Action("Create", "OpeningBalance")' }, 1000);
+                                    }
+                                    else {
+                                        $.notify(response.message, "error");
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }
+            }
+        });
+        loadProductName($('#productID'));
+    </script>
+}

@@ -1,0 +1,120 @@
+﻿@model IEnumerable<PosApplication.Models.PurchaseMasterModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div style="margin-top: 90px;">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="panel panel-bd lobidisable">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h4>Purchase Information</h4>
+                </div>
+            </div>
+            <div style="height:97%; width:100%; overflow:auto; padding:0; margin:0 auto; margin-left:10px; margin-top:10px;" id="printArea">
+                <div class="col-lg-12 col-md-2 col-sm-12 col-xs-12">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"></div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="text-align:center; font-weight: bold; font-size:15px; margin-bottom:10px; border: 1px solid #000; border-radius:4px;">
+                            Purchase Summary
+                        </div>
+                    </div>
+                    <table class="table table-bordered table-hover table-responsive" id="purchaseTable">
+                        <thead style="background:#25be8f;">
+                            <tr>
+                                <th style="text-align:center; font-size:12px;">
+                                    Date
+                                </th>
+                                <th style="text-align:center; font-size:12px;">
+                                    Reference No.
+                                </th>
+                                <th style="text-align:center; font-size:12px;">
+                                    Bill / Challan No.
+                                </th>
+                                <th style="text-align:center; font-size:12px;">
+                                    Total Amount
+                                </th>
+                                <th style="text-align:center; font-size:12px;">
+                                    VAT
+                                </th>
+                                <th style="text-align:center; font-size:12px;">
+                                    Total VAT + Amount
+                                </th>
+                                <th style="text-align:center; font-size:12px;">
+                                    Discount
+                                </th>
+                                <th style="text-align:center; font-size:12px;">
+                                    Net Amount
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td style="text-align: center; font-size: 12px;">
+                                        @Html.DisplayFor(modelItem => item.dPurchaseDate)
+                                    </td>
+                                    <td style="font-size:12px;">
+                                        @Html.DisplayFor(modelItem => item.vReferenceNo)
+                                    </td>
+                                    <td style="font-size:12px;">
+                                        @Html.DisplayFor(modelItem => item.vChallanNo)
+                                    </td>
+                                    <td style="text-align:right; font-size:12px;">
+                                        @Html.DisplayFor(modelItem => item.mTotalAmount)
+                                    </td>
+                                    <td style="text-align: right; font-size: 12px;">
+                                        @Html.DisplayFor(modelItem => item.mTotalVatAmount)
+                                    </td>
+                                    <td style="text-align: right; font-size: 12px;">
+                                        @Html.DisplayFor(modelItem => item.mTotalVatWithAmount)
+                                    </td>
+                                    <td style="text-align: right; font-size: 12px;">
+                                        @Html.DisplayFor(modelItem => item.mTotalDiscount)
+                                    </td>
+                                    <td style="text-align: right; font-size: 12px;">
+                                        @Html.DisplayFor(modelItem => item.mNetAmount)
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-bottom:10px;">
+                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <input type="button" value="Print" id="btnPrint" class="btn btn-success pull-right" style="width: 75px;" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        function printData()
+            {
+            var divToPrint = document.getElementById("printArea");
+                newWin= window.open("");
+                newWin.document.write(divToPrint.outerHTML);
+                newWin.print();
+                newWin.close();
+            }
+
+        $('#btnPrint').click(function () {
+            $(this).hide();
+            printData();
+            $(this).show();
+        });
+    </script>
+}

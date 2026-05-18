@@ -1,0 +1,79 @@
+﻿@model IEnumerable<PosApplication.Models.AccountHeadModel>
+
+
+<div style="margin-top: 90px;">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin: auto;">
+        <div class="panel panel-bd lobidisable">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h4>Account Head Information</h4>
+                </div>
+            </div>
+            <div style="height:97%; width:100%; overflow:auto; padding:0; margin:0 auto; margin-left:10px; margin-top:10px;">
+                @Html.AntiForgeryToken()
+                <a href="@Url.Action("AccountHeadInfo", "userAuthentication")" class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i>Create</a>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top:10px;">
+                    <div class="row" style="margin-bottom:10px; width: 100%;">
+                        <table class="table table-bordered table-hover table-responsive table-striped" style="width: 100%;" id="AccountHeadTable">
+                            <thead>
+                                <tr style="background:#12baa5;">
+                                    <th style="font-size: 10px; text-align: center; display:none;">
+                                        Account Head ID
+                                    </th>
+                                    <th style="font-size: 10px; text-align: center; width: 55%;">
+                                        Account Head Name
+                                    </th>
+                                    <th style="font-size: 10px; text-align: center; width: 35%; ">
+                                        Status
+                                    </th>
+                                    <th style="width: 5%; "></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td style="font-size: 11px; width: 100%; display:none;" class="UnitID">
+                                            @Html.DisplayFor(modelItem => item.vAccountHeadID, new { @id = "vAccountHeadID" })
+                                        </td>
+                                        <td style="font-size: 11px;">
+                                            @Html.DisplayFor(modelItem => item.vAccountHead)
+                                        </td>
+                                        <td style="font-size: 11px;">
+                                            @Html.DisplayFor(modelItem => item.vStatus)
+                                        </td>
+                                        <td>
+                                            <a href="@Url.Action("AccountHeadInfo", "userAuthentication", new { AccountHeadIDAuto = @item.vAccountHeadIDAuto })" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i></a>
+                                            @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                                                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                                                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+                                            @*<input type="button" value="Edit" id="btnEdit" class="btnEdit btn btn-primary" />*@
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#AccountHeadTable').DataTable();
+
+            @*$('#UnitTable').on('click', '.btnEdit', function () {
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("Create", "UnitInformation")',
+                    data: { unitID: $(this).parents('tr').find('.UnitID').text() },
+                    success: function (response) {
+                        window.location.href = '@Url.Action("Create","UnitInformation")';
+                    }
+                });
+            });*@
+        });
+    </script>
+}

@@ -1,0 +1,119 @@
+﻿@using PosApplication.Models
+@model PosApplication.Models.CategoryInfoModel
+
+<div style="margin-top: 90px;">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="panel panel-bd lobidisable">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h4>Category Information</h4>
+                </div>
+            </div>
+            <div style="height:97%; width:100%; overflow:auto; padding:0; margin:0 auto; margin-left:10px; margin-top:10px;">
+                @Html.AntiForgeryToken()
+                @if (Session["AccountType"].ToString() == "Super Admin" || Session["AccountType"].ToString() == "Admin")
+                {
+                    <input type="button" id="btnFind" value="Find" class="btn btn-primary" />
+                }
+                <hr />
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top:10px;">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    @Html.Label("Category ID:", new { @class = "control-label", @style = "font-size:10px;" })
+                                </div>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                    @Html.TextBoxFor(model => model.vCategoryID, new { @class = "form-control", @id = "CategoryID", @readonly = "readonly", @style = "background: #fff;" })
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-top:5px;">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    @Html.Label("Category Name:", new { @class = "control-label", @style = "font-size:10px;" })
+                                </div>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                    @Html.TextBoxFor(model => model.vCategoryName, new { @class = "form-control", @id = "CategoryName" })
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-top:5px;">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    @Html.Label("Status:", new { @class = "control-label", @style = "font-size:10px;" })
+                                </div>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                    @Html.DropDownListFor(model => model.vStatus, new SelectList(DropDownListModel.GetStatus, "Value", "Text", "Active"), new { @class = "form-control", @id = "vStatus" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row" style="margin-bottom:10px;">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"></div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                            <input type="button" id="btnSave" value="Save" class="btn btn-success pull-right" style="" />
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                            <input type="button" id="btnReset" value="Reset" class="btn btn-primary pull-left" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.HiddenFor(model => model.vAutoCategoryID, new { @id = "vAutoCategoryID" })
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#btnFind').click(function () {
+                window.location.href = '@Url.Action("Index","CategoryInfo")';
+            });
+
+            function formCheck() {
+                if ($('#CategoryName').val()) {
+                    return true;
+                }
+                else {
+                    $('#CategoryName').notify('Please provide category name!', 'warn');
+                    $('#CategoryName').focus();
+                    return false;
+                }
+            }
+
+            $('#btnSave').click(function () {
+                if (formCheck()) {
+                    bootbox.confirm("Do you want to save this information?", function (result) {
+                        if (result) {
+                            var data = new FormData;
+                            data.append('vAutoCategoryID', $('#vAutoCategoryID').val());
+                            data.append('vCategoryID', $('#CategoryID').val());
+                            data.append('vCategoryName', $('#CategoryName').val());
+                            data.append('vStatus', $('#vStatus').val());
+                            $.ajax({
+                                type: 'POST',
+                                url: '@Url.Action("Create", "CategoryInfo")',
+                                data: data,
+                                contentType: false,
+                                processData: false,
+                                success: function (response) {
+                                    if (response.success) {
+                                        $.notify(response.message, 'success');
+                                    }
+                                    else {
+                                        $.notify(response.message, 'error');
+                                    }
+                                    window.setTimeout(function () { window.location.href = '@Url.Action("Index", "CategoryInfo")' }, 1000);
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+
+            $('#btnReset').click(function () {
+                window.location.href = '@Url.Action("Create", "PackInfo")';
+            });
+        });
+    </script>
+}

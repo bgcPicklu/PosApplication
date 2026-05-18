@@ -1,0 +1,185 @@
+﻿@using PosApplication.Models
+@model PosApplication.Models.ProductWiseStockRegisterReportModel
+
+<div style="margin-top: 90px;">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="margin: auto;">
+        <div class="panel panel-bd lobidisable">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h4>Product Information</h4>
+                </div>
+            </div>
+            <div style="height:97%; width:100%; overflow:auto; padding:0; margin:0 auto; margin-left:10px; margin-top:10px;">
+                @Html.AntiForgeryToken()
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top:10px;">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top:5px;">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 col-sm-34 col-xs-3">
+                                        <label style="font-size:12px;">Category Name :</label>
+                                    </div>
+                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                        <label style="display:flex; font-weight:normal;">
+                                            @Html.DropDownListFor(model => model.vCategoryID, new SelectList(DropDownListModel.GetCategory, "Value", "Text", "0"), new { @class = "form-control", @id = "CategoryID", @style = "background: #fff;" })
+                                            &nbsp;&nbsp;
+                                            <input type="checkbox" id="chkCatAll" /> All
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top:5px;">
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 col-sm-34 col-xs-3">
+                                        <label style="font-size:12px;">Pack Size :</label>
+                                    </div>
+                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                        <label style="display:flex; font-weight:normal;">
+                                            @Html.DropDownListFor(model => model.vPackSize, new SelectList(DropDownListModel.GetPackSize, "Value", "Text", "0"), new { @class = "form-control", @id = "PackID", @readonly = "readonly", @style = "background: #fff;" })
+                                            &nbsp;&nbsp;
+                                            <input type="checkbox" id="chkPackAll" /> All
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top:5px;">
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                        <label style="font-size:12px;">Product Name :</label>
+                                    </div>
+                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                        <label style="display:flex; font-weight:normal;">
+                                            <select id="productID" class="form-control" style="background: #fff;">
+                                                <option>--Select--</option>
+                                            </select>&nbsp;&nbsp;
+                                            <input type="checkbox" id="chkAll" /> All
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top:5px; margin-bottom:10px;">
+                                <div class="row">
+                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9"></div>
+                                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                                        <input type="button" id="btnPreview" class="btn btn-primary" value="Preview" style="font-size:10px; font-weight:bold; margin-left: 27px;" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#CategoryID').change(function () {
+                loadProductName($('#productID'));
+            });
+
+            $('#PackID').change(function () {
+                loadProductName($('#productID'));
+            });
+
+            var productName = [];
+
+            function loadProductName(element) {
+                debugger;
+                var categoryID = $('#CategoryID').val();
+                if ($('#chkCatAll').is(':checked'))
+                    categoryID = '%';
+                var packID = $('#PackID').val();
+                if ($('#chkPackAll').is(':checked'))
+                    packID = '%';
+                $.ajax({
+                    url: '@Url.Action("GetAllProduct", "ProductInfo")',
+                    type: "GET",
+                    data: { categoryID: categoryID, packID: packID },
+                    success: function (data) {
+                        productName = data;
+                        renderProductName(element, productName);
+                    }
+                });
+            }
+
+            function renderProductName(element, productName) {
+                var $ele = $(element);
+                $ele.empty();
+                $ele.append($('<option/>').val('0').text('--Select--'));
+                $.each(productName, function (i, val) {
+                    $ele.append($('<option/>').val(val.vProductID).text(val.vProductName));
+                });
+            }
+
+            $('#chkCatAll').change(function () {
+                if ($('#chkCatAll').is(':checked')) {
+                    $('#CategoryID').val('0');
+                    $('#CategoryID').prop('disabled', true);
+                }
+                else {
+                    $('#CategoryID').val('0');
+                    $('#CategoryID').prop('disabled', false);
+                }
+                loadProductName($('#productID'));
+            });
+
+            $('#chkPackAll').change(function () {
+                if ($('#chkPackAll').is(':checked')) {
+                    $('#PackID').val('0');
+                    $('#PackID').prop('disabled', true);
+                }
+                else {
+                    $('#PackID').val('0');
+                    $('#PackID').prop('disabled', false);
+                }
+                loadProductName($('#productID'));
+            });
+
+            $('#chkAll').change(function () {
+                if ($('#chkAll').is(':checked'))
+                {
+                    $('#productID').val('0');
+                    $('#productID').prop('disabled', true);
+                }
+                else {
+                    $('#productID').val('0');
+                    $('#productID').prop('disabled', false);
+                }
+            });
+
+            $('#btnPreview').click(function () {
+                var vCategoryID = $('#CategoryID').val();
+                if ($('#chkCatAll').is(':checked'))
+                    vCategoryID = '%';
+                var vPackID = $('#PackID').val();
+                if ($('#chkPackAll').is(':checked'))
+                    vPackID = '%';
+                var vProductID = $('#productID').val();
+                if ($('#chkAll').is(':checked'))
+                    vProductID = '%';
+                debugger;
+
+                if (vProductID !== "") {
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("ProductInfoReport", "ProductInfo")",
+                        data: {
+                            vProductID: vProductID,
+                            vCategoryID: vCategoryID,
+                            vPackID: vPackID
+                        },
+                        success: function (response) {
+                            window.location.href = "@Url.Action("Details", "ProductInfo")";
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}

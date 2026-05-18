@@ -1,0 +1,257 @@
+﻿@using PosApplication.Models
+@model PosApplication.Models.PartyInformationModel
+
+<div style="margin-top: 90px;">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="panel panel-bd lobidisable">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h4>Party Information</h4>
+                </div>
+            </div>
+            <div style="height:97%; width:100%; overflow:auto; padding:0; margin:0 auto; margin-left:10px; margin-top:10px;">
+                @Html.AntiForgeryToken()
+                @*@if (Session["AccountType"].ToString() == "Super Admin" || Session["AccountType"].ToString() == "Admin")
+                {*@
+                    <input type="button" id="btnFind" value="Find" class="btn btn-primary" />
+                @*}*@
+                <hr />
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top:10px;">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    @Html.Label("Party ID:", new { @class = "control-label", @style = "font-size:10px;" })
+                                </div>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                    @Html.TextBoxFor(model => model.vPartyId, new { @class = "form-control", @id = "partyID", @readonly = "readonly", @style = "background: #fff;" })
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-top:5px;">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    @Html.Label("Party Name:", new { @class = "control-label", @style = "font-size:10px;" })
+                                </div>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                    @Html.TextBoxFor(model => model.vPartyName, new { @class = "form-control", @id = "partyName" })
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-top:5px;">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    @Html.Label("Address:", new { @class = "control-label", @style = "font-size:10px;" })
+                                </div>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                    @Html.TextBoxFor(model => model.vAddress, new { @class = "form-control", @id = "address" })
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-top:5px;">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    @Html.Label("Phone:", new { @class = "control-label", @style = "font-size:10px;" })
+                                </div>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                    @Html.TextBoxFor(model => model.vPhone, new { @class = "form-control", @id = "phone" })
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-top:5px;">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    @Html.Label("Mobile No:", new { @class = "control-label", @style = "font-size:10px;" })
+                                </div>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                    @Html.TextBoxFor(model => model.vMobileNo, new { @class = "form-control", @id = "mobile" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    @Html.Label("Email:", new { @class = "control-label", @style = "font-size:10px;" })
+                                </div>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                    @Html.TextBoxFor(model => model.vEmail, new { @class = "form-control", @id = "email" })
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-top:5px;">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    @Html.Label("Contact Person:", new { @class = "control-label", @style = "font-size:10px;" })
+                                </div>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                    @Html.TextBoxFor(model => model.vContactPerson, new { @class = "form-control", @id = "ContactPerson" })
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-top:5px;">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    @Html.Label("Contact No:", new { @class = "control-label", @style = "font-size:10px;" })
+                                </div>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                    @Html.TextBoxFor(model => model.vPersonMobile, new { @class = "form-control", @id = "PersonMobile" })
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-top:5px;">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    @Html.Label("Status:", new { @class = "control-label", @style = "font-size:10px;" })
+                                </div>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                    @Html.DropDownListFor(model => model.vStatus, new SelectList(DropDownListModel.GetStatus, "Value", "Text", "Active"), new { @class = "form-control", @id = "vStatus" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row" style="margin-bottom:10px;">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"></div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                            <input type="button" id="btnSave" value="Save" class="btn btn-success pull-right" style="" />
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                            <input type="button" id="btnReset" value="Reset" class="btn btn-primary pull-left" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.HiddenFor(model => model.vPartyIdAuto, new { @id = "vPartyIdAuto" })
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#phone').keyup(function (event) {
+                if ($(this).val().length > 0) {
+                    if (!$.isNumeric($(this).val())) {
+                        $(this).val('');
+                        $(this).notify('Please provide numeric value!!', 'warn');
+                    }
+                }
+            });
+
+            $('#mobile').keyup(function (event) {
+                if ($(this).val().length > 0) {
+                    if (!$.isNumeric($(this).val())) {
+                        $(this).val('');
+                        $(this).notify('Please provide numeric value!!', 'warn');
+                    }
+                }
+            });
+
+            $('#PersonMobile').keyup(function (event) {
+                if ($(this).val().length > 0) {
+                    if (!$.isNumeric($(this).val())) {
+                        $(this).val('');
+                        $(this).notify('Please provide numeric value!!', 'warn');
+                    }
+                }
+            });
+
+            $('#btnFind').click(function () {
+                window.location.href = '@Url.Action("Index","PartyInfo")';
+            });
+
+            function formCheck() {
+                if ($('#partyName').val()) {
+                    if ($('#address').val()) {
+                        if ($('#phone').val()) {
+                            if ($('#mobile').val()) {
+                                if ($('#email').val()) {
+                                    if ($('#ContactPerson').val()) {
+                                        if ($('#PersonMobile').val()) {
+                                            return true;
+                                        }
+                                        else {
+                                            $('#PersonMobile').notify('Please provide person mobile no.!', 'warn');
+                                            $('#PersonMobile').focus();
+                                            return false;
+                                        }
+                                    }
+                                    else {
+                                        $('#ContactPerson').notify('Please provide contact person name!', 'warn');
+                                        $('#ContactPerson').focus();
+                                        return false;
+                                    }
+                                }
+                                else {
+                                    $('#email').notify('Please provide email!', 'warn');
+                                    $('#email').focus();
+                                    return false;
+                                }
+                            }
+                            else {
+                                $('#mobile').notify('Please provide mobile no.!', 'warn');
+                                $('#mobile').focus();
+                                return false;
+                            }
+                        }
+                        else {
+                            $('#phone').notify('Please provide phone no.!', 'warn');
+                            $('#phone').focus();
+                            return false;
+                        }
+                    }
+                    else {
+                        $('#address').notify('Please provide address!', 'warn');
+                        $('#address').focus();
+                        return false;
+                    }
+                }
+                else {
+                    $('#partyName').notify('Please provide party name!', 'warn');
+                    $('#partyName').focus();
+                    return false;
+                }
+            }
+
+            $('#email').focusout(function () {
+                var conEmail = $('#email').val();
+                if (!isEmail(conEmail)) {
+                    $('#email').val('');
+                    $('#email').notify("Enter Valid Mail Address", "error");
+                }
+            });
+
+            $('#btnSave').click(function () {
+                if (formCheck()) {
+                    bootbox.confirm("Do you want to save this information?", function (result) {
+                        if (result) {
+                            var data = new FormData;
+                            data.append('vPartyIdAuto', $('#vPartyIdAuto').val());
+                            data.append('vPartyId', $('#partyID').val());
+                            data.append('vPartyName', $('#partyName').val());
+                            data.append('vAddress', $('#address').val());
+                            data.append('vPhone', $('#phone').val());
+                            data.append('vMobileNo', $('#mobile').val());
+                            data.append('vEmail', $('#email').val());
+                            data.append('vContactPerson', $('#ContactPerson').val());
+                            data.append('vPersonMobile', $('#PersonMobile').val());
+                            data.append('vStatus', $('#vStatus').val());
+                            $.ajax({
+                                type: 'POST',
+                                url: '@Url.Action("Create", "PartyInfo")',
+                                data: data,
+                                contentType: false,
+                                processData: false,
+                                success: function (response) {
+                                    if (response.success) {
+                                        $.notify(response.message, 'success');
+                                    }
+                                    else {
+                                        $.notify(response.message, 'error');
+                                    }
+                                    window.setTimeout(function () { window.location.href = '@Url.Action("Index", "PartyInfo")' }, 1000);
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+
+            $('#btnReset').click(function () {
+                window.location.href = '@Url.Action("Create", "PartyInfo")';
+            });
+        });
+    </script>
+}

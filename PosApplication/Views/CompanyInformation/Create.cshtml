@@ -1,0 +1,181 @@
+﻿@model PosApplication.Models.CompanyInformationModel
+
+<div style="margin-top: 90px;">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:50px !important;">
+        <div class="panel panel-bd lobidisable">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h4>Company Information</h4>
+                </div>
+            </div>
+            <div style="height:97%; width:100%; overflow:auto; padding:0; margin:0 auto; margin-left:10px;">
+                @Html.AntiForgeryToken()
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top: 10px;">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="row" style="margin-top: 5px;">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    @Html.Label("Company Name:", new { @class = "control-label", @style = "font-size:10px;" })
+                                </div>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                    @Html.TextBoxFor(model => model.vCompanyName, new { @class = "form-control", @id = "companyName" })
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-top: 5px;">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    @Html.Label("Address:", new { @class = "control-label", @style = "font-size:10px;" })
+                                </div>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                    @Html.TextBoxFor(model => model.vAddress, new { @class = "form-control", @id = "Address" })
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-top: 5px;">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    @Html.Label("Phone:", new { @class = "control-label", @style = "font-size:10px;" })
+                                </div>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                    @Html.TextBoxFor(model => model.vPhone, new { @class = "form-control", @id = "phone" })
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-top: 5px;">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    @Html.Label("Mobile No:", new { @class = "control-label", @style = "font-size:10px;" })
+                                </div>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                    @Html.TextBoxFor(model => model.vMobile, new { @class = "form-control", @id = "mobile" })
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top: 5px;">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    @Html.Label("Email:", new { @class = "control-label", @style = "font-size:10px;" })
+                                </div>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                    @Html.TextBoxFor(model => model.vEmail, new { @class = "form-control", @id = "email" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div style="margin-top: 1%">
+                                <div class="col-lg-8 col-md-8 col-sm-10 col-xs-10 pull-right">
+                                    @Html.Label("Upload Company Logo", new { @class = "control-label", @style = "font-size:10px; width: 100%;" })
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-10 col-xs-10 pull-right">
+                                    <img src="@Url.Content(Model.vLogo)" style="margin:10px;" height="100" width="100" id="logoPreview" />
+                                    <input type="file" id="imagePathName" name="LogoUpload" style="width:220px;" accept="image/bmp, image/jpeg, image/png, image/jpg" onchange="ShowImagePreview(this, document.getElementById('logoPreview'))" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row" style="margin-bottom: 10px;">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"></div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                            <input type="button" id="btnSave" value="Save" class="btn btn-success pull-right" style="max-width:90px;" />
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                            <input type="button" id="btnReset" value="Reset" class="btn btn-primary pull-left" style="max-width:90px;" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#phone').keyup(function (event) {
+                if ($(this).val().length > 0) {
+                    if (!$.isNumeric($(this).val())) {
+                        $(this).val('');
+                        $(this).notify('Please provide numeric value!!', 'warn');
+                    }
+                }
+            });
+
+            $('#mobile').keyup(function (event) {
+                if ($(this).val().length > 0) {
+                    if (!$.isNumeric($(this).val())) {
+                        $(this).val('');
+                        $(this).notify('Please provide numeric value!!', 'warn');
+                    }
+                }
+            });
+
+            function formCheck() {
+                if ($('#companyName').val()) {
+                    if ($('#Address').val()) {
+                        if ($('#phone').val()) {
+                            if ($('#mobile').val()) {
+                                if ($('#email').val()) {
+                                    return true;
+                                }
+                                else {
+                                    $('#email').notify('Please provide email!', 'warn');
+                                    return false;
+                                }
+                            }
+                            else {
+                                $('#mobile').notify('Please provide mobile no.!', 'warn');
+                                return false;
+                            }
+                        }
+                        else {
+                            $('#phone').notify('Please provide phone no.!', 'warn');
+                            return false;
+                        }
+                    }
+                    else {
+                        $('#Address').notify('Please provide Address!', 'warn');
+                        return false;
+                    }
+                }
+                else {
+                    $('#companyName').notify('Please provide company name!', 'warn');
+                    return false;
+                }
+            }
+
+            $('#btnSave').click(function () {
+                if (formCheck()) {
+                    bootbox.confirm("Do you want to save this information?", function (result) {
+                        if (result) {
+                            var logoFile = $('#imagePathName').get(0).files;
+                            var data = new FormData;
+                            data.append('vCompanyName', $('#companyName').val());
+                            data.append('vAddress', $('#Address').val());
+                            data.append('vPhone', $('#phone').val());
+                            data.append('vMobile', $('#mobile').val());
+                            data.append('vEmail', $('#email').val());
+                            data.append('LogoUpload', logoFile[0]);
+                            $.ajax({
+                                type: 'POST',
+                                url: '@Url.Action("Create","CompanyInformation")',
+                                data: data,
+                                contentType: false,
+                                processData: false,
+                                success: function (response) {
+                                    if (response.success) {
+                                        $.notify(response.message, 'success');
+                                    }
+                                    else {
+                                        $.notify(response.message, 'error');
+                                    }
+                                    window.setTimeout(function () { window.location.href = '@Url.Action("Create","CompanyInformation")' }, 1000);
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+
+            $('#btnReset').click(function () {
+                window.location.href = '@Url.Action("Create","CompanyInformation")';
+            });
+        });
+    </script>
+}

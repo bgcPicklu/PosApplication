@@ -1,0 +1,98 @@
+﻿/*  
+Thanks to: Usama Tahir
+https://medium.com/@AmJustSam
+*/
+
+*{
+ margin: 0;
+ padding: 0;
+}
+
+html{
+    width: 100vw;
+    height: 100vh;
+}
+
+/* CSS which you need for blurred box */
+body{
+ background-repeat: no-repeat;
+ background-attachment: fixed;
+ background-size: cover;
+ background-position: top;
+ background-image:url('../images/BG.jpg');
+ font-family: Arial, Helvetica;
+ letter-spacing: 0.02em;
+  font-weight: 400;
+ -webkit-font-smoothing: antialiased; 
+}
+
+.blurred-box{
+  margin: auto;
+  position: relative;
+  width: 340px;
+  height: 440px;
+  /*margin-top: 16%;
+  margin-left:26.5%;*/
+  /*top: calc(50% - 175px);
+  left: calc(50% - 125px);*/
+  background: inherit;
+  border-radius: 2px;
+  overflow: hidden;
+  transform: translate(0, 10%);
+}
+
+.blurred-box:after{
+ content: '';
+ /*width: 120%;
+ height: 120%;*/
+ background: inherit; 
+ position: absolute;
+ left: -25px;  /*giving minus -25px left position*/
+ right: 0;
+ top: -25px;   /*giving minus -25px top position*/
+ bottom: 0;
+ box-shadow: inset 0 0 0 200px rgba(117, 228, 157, 0.4);
+ filter: blur(15px);
+}
+
+.blurred-box:hover{
+    box-shadow: inset 0 0 0 200px rgba(57, 138, 135, 0.38);
+}
+
+
+/* Form which you dont need */
+.user-login-box{
+  position: relative;
+  margin-top: 10px;
+  width:95%;
+  text-align: center;
+  z-index: 1;
+  margin: 0 auto;
+}
+.user-login-box > *{
+  display: inline-block;
+  width: 95%;
+}
+
+.user-icon{
+  width: 120px;
+  height: 120px;
+  position: relative;
+  border-radius: 50%;
+  background-size: contain;
+  background-image: url('../images/loginImage.png');
+  /*background-repeat: no-repeat;*/
+  background-position:center;
+}
+
+input[type="text"], input[type="password"]{
+    border: 1px solid #ad85bd;
+}
+
+input[type="text"]:hover, input[type="password"]:hover{
+    border: 1px solid #1bd3ab;
+}
+
+input[type="text"]:focus, input[type="password"]:focus{
+    border: 1px solid #1bd3ab;
+}

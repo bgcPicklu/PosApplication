@@ -1,0 +1,1024 @@
+﻿@using PosApplication.Models;
+@model PosApplication.Models.PurchaseMasterModel
+<div style="margin-top: 90px;">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin: auto;">
+        <div class="panel panel-bd lobidisable">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h4>Purchase Information</h4>
+                </div>
+            </div>
+            <div style="height:97%; width:100%; overflow:auto; padding:0; margin:0 auto; margin-left:10px; margin-top:10px;">
+                @Html.AntiForgeryToken()
+                <input type="button" id="btnFind" value="Find" class="btn btn-primary" />
+                <hr />
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top:10px;">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top:10px;">
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        @Html.Label("Purchase Date:", new { @class = "control-label", @style = "font-size:10px;" })
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        @Html.TextBoxFor(model => model.dPurchaseDate, new { @class = "form-control", @id = "PurchaseDate", @readonly = "readonly", @style = "background: #fff;" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        @Html.Label("Receive No:", new { @class = "control-label", @style = "font-size:10px;" })
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        @Html.TextBoxFor(model => model.vReferenceNo, new { @class = "form-control", @id = "ReferenceNo", @readonly = "readonly", @style = "background: #fff;" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        @Html.Label("Bill/Challan No:", new { @class = "control-label", @style = "font-size:10px;" })
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        @Html.TextBoxFor(model => model.vChallanNo, new { @class = "form-control", @id = "ChallanNo" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top:10px;">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    @Html.Label("Payment Type :", new { @class = "control-label", @style = "font-size:10px;" })
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    @Html.DropDownListFor(model => model.vPaymentType, new SelectList(DropDownListModel.GetPaymentMethod, "Value", "Text", "Cash"), new { @class = "form-control", @id = "paymentMethod", @style = "text-align: right;" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    @Html.Label("Account/Cheque No :", new { @class = "control-label", @style = "font-size:10px;" })
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    @Html.TextBoxFor(model => model.vAccount_ChequeNo, new { @class = "form-control", @id = "accountNo", @style = "text-align: right;" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    @Html.Label("Bank Name :", new { @class = "control-label", @style = "font-size:10px;" })
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    @Html.TextBoxFor(model => model.vBankName, new { @class = "form-control", @id = "bankName", @style = "text-align: right;" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top: 10px;">
+
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                            @Html.Label("VAT(%):", new { @class = "control-label", @style = "font-size:10px;" })
+                                        </div>
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                            @Html.TextBoxFor(model => model.mVatPercent, new { @class = "form-control", @id = "VATPercentage", @style = "text-align: right;" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+                                </div>
+
+                                <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
+                                    <div class="row">
+                                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                                            <input type="button" value="Proceed" class="btn btn-primary pull-left" id="btnProceed" style="font-size: 12px;" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top:20px;">
+                            <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                        @Html.Label("Supplier Name:", new { @class = "control-label", @style = "font-size:10px;" })
+                                    </div>
+                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                        @Html.DropDownListFor(model => model.vSupplierID, new SelectList(DropDownListModel.GetSupplier, "Value", "Text", "0"), new { @class = "form-control", @id = "SupplierId", @disabled = true })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                        @Html.Label("Pack Size:", new { @class = "control-label", @style = "font-size:10px;" })
+                                    </div>
+                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                        @Html.DropDownListFor(model => model.vPackID, new SelectList(DropDownListModel.GetPackSize, "Value", "Text", "0"), new { @class = "form-control", @id = "PackId", @disabled = true })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top:10px;">
+                    <div class="row" style="max-height: 500px; overflow: auto;">
+                        <table class="table table-responsive table-striped table-bordered table-hover table-condensed" style="width: 98%;">
+                            <thead style="background: #1088b9; color: white;">
+                                <tr>
+                                    <th style="text-align: center; width: 23%; font-size: 8px;">Product Name</th>
+                                    <th style="text-align: center; width: 4%; font-size: 8px;">Pack</th>
+                                    <th style="text-align: center; width: 6%; font-size: 8px;">Max Qty</th>
+                                    <th style="text-align: center; width: 6%; font-size: 8px;">Min Qty</th>
+                                    <th style="text-align: center; width: 6%; font-size: 8px;">C.Stock</th>
+                                    <th style="text-align: center; width: 6%; font-size: 8px; ">LU Qty.</th>
+                                    <th style="text-align: center; width: 6%; font-size: 8px;">SU Qty.</th>
+                                    <th style="text-align: center; width: 6%; font-size: 8px; ">Amount</th>
+                                    <th style="text-align: center; width: 5%; font-size: 8px;">VAT</th>
+                                    <th style="text-align: center; width: 6%; font-size: 8px; ">VAT+Amt.</th>
+                                    <th style="text-align: center; width: 5%; font-size: 8px; ">Discount</th>
+                                    <th style="text-align: center; width: 8%; font-size: 8px;">Total Net Amt.</th>
+                                    <th style="text-align: center; width: 5%; font-size: 8px; ">P.Rate</th>
+                                    <th style="text-align: center; width: 5%; font-size: 8px;">S.Rate</th>
+                                    <th style="width: 3%; font-size: 10px;"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="width: 23%;">
+                                        <select id="productID" class="form-control" disabled="disabled">
+                                            <option>--Select--</option>
+                                        </select>
+                                    </td>
+                                    <td style="width: 4%;">
+                                        <label id="packName" style="font-size: 10px; font-weight:normal; text-align:right; width: 100%;"></label>
+                                    </td>
+                                    <td style="width: 6%;">
+                                        <label id="MaxQty" style="font-size: 10px; font-weight: normal; text-align: right; width: 100%; "></label>
+                                    </td>
+                                    <td style="width: 6%;">
+                                        <label id="MinQty" style="font-size: 10px; font-weight: normal; text-align: right; width: 100%; "></label>
+                                    </td>
+                                    <td style="width: 5%;">
+                                        <label id="currentStock" style="font-size: 10px; font-weight: normal; text-align: right; width: 100%; "></label>
+                                    </td>
+                                    <td style="width: 6%;">
+                                        <input type="text" id="luQty" class="form-control" disabled="disabled" style="text-align: right; margin-right: 20%;" />
+                                    </td>
+                                    <td style="width: 6%;">
+                                        <input type="text" id="suQty" class="form-control" disabled="disabled" style="text-align: right; margin-right: 20%;" />
+                                    </td>
+                                    <td style="width: 6%;">
+                                        <input type="text" id="vAmount" class="form-control" disabled="disabled" style="text-align: right; margin-right: 20%;" />
+                                    </td>
+                                    <td style="width: 6%;">
+                                        <label id="vat" style="font-size: 10px; font-weight: normal; text-align: right; width: 100%; "></label>
+                                    </td>
+                                    <td style="width: 5%;">
+                                        <label id="vatAmount" style="font-size: 10px; font-weight: normal; text-align: right; width: 100%; "></label>
+                                    </td>
+                                    <td style="width: 6%;">
+                                        <input type="text" id="discount" class="form-control" disabled="disabled" style="text-align: right; margin-right: 20%;" />
+                                    </td>
+                                    <td style="width: 5%;">
+                                        <label id="totalNetAmount" style="font-size: 10px; font-weight: normal; text-align: right; width: 100%; "></label>
+                                    </td>
+                                    <td style="width: 8%;">
+                                        <label id="purchaseRate" style="font-size: 10px; font-weight: normal; text-align: right; width: 100%; "></label>
+                                    </td>
+                                    <td style="width: 5%;">
+                                        <label id="SalesRate" style="font-size: 10px; font-weight: normal; text-align: right; width: 100%; "></label>
+                                    </td>
+                                    <td style="width: 3%;">
+                                        <input type="button" class="btn btn-success" value="Add" id="btnAddEdit" style="width: 60px; float: right; font-size: 12px;" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top:10px;">
+                    <div class="row" style="max-height: 500px; overflow: auto;">
+                        <table class="table table-responsive table-striped table-bordered table-hover table-condensed" id="tbProduct" style="width: 98%;">
+                            <thead style="background: #1088b9; color: white;">
+                                <tr>
+                                    <th style="display: none; font-size: 8px;">Product ID</th>
+                                    <th style="text-align: center; width: 14%; font-size: 8px;">Product Name</th>
+                                    <th style="text-align: center; width: 4%; font-size: 8px;">Pack</th>
+                                    <th style="text-align: center; width: 6%; font-size: 8px;">Max Qty</th>
+                                    <th style="text-align: center; width: 6%; font-size: 8px;">Min Qty</th>
+                                    <th style="text-align: center; width: 6%; font-size: 8px;">C.Stock</th>
+                                    <th style="text-align: center; width: 6%; font-size: 8px; ">LU Qty.</th>
+                                    <th style="text-align: center; width: 6%; font-size: 8px;">SU Qty.</th>
+                                    <th style="text-align: center; width: 6%; font-size: 8px; ">Amount</th>
+                                    <th style="text-align: center; width: 5%; font-size: 8px;">VAT</th>
+                                    <th style="text-align: center; width: 6%; font-size: 8px; ">VAT+Amt.</th>
+                                    <th style="text-align: center; width: 5%; font-size: 8px; ">Discount</th>
+                                    <th style="text-align: center; width: 8%; font-size: 8px;">Total Net Amt.</th>
+                                    <th style="text-align: center; width: 4%; font-size: 8px; ">P.Rate</th>
+                                    <th style="text-align: center; width: 4%; font-size: 8px;">S.Rate</th>
+                                    <th style="width: 14%; font-size: 10px;"></th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="7" style="width: 100%; text-align: right; font-size: 10px;">Total = </td>
+                                    <td><label id="totalAmount" style="text-align: right; width: 100%; font-size: 10px;"></label></td>
+                                    <td><label id="totalVAT" style="text-align: right; width: 100%; font-size: 10px;"></label></td>
+                                    <td><label id="totalVATWithAmount" style="text-align: right; width: 100%; font-size: 10px;"></label></td>
+                                    <td><label id="totalDiscountAmount" style="text-align: right; width: 100%; font-size: 10px;"></label></td>
+                                    <td><label id="totalAmountValue" style="text-align: right; width: 100%; font-size: 10px;"></label></td>
+                                    <td colspan="3"></td>
+                                </tr>
+                            </tfoot>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="row" style="margin-top: 5px; margin-bottom: 5px;">
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    @Html.Label("Previous Dues:", new { @class = "control-label", @style = "font-size:10px; text-align: right; width: 100%;" })
+                                </div>
+                                <div class="col-lg-7 col-md-7 col-sm-8 col-xs-8">
+                                    @Html.TextBoxFor(model => model.mPreviousDues, new { @class = "form-control", @id = "PreviousDues", @style = "text-align: right; background:#fff;", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="row" style="margin-top: 5px; margin-bottom: 5px;">
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    @Html.Label("VAT Amount:", new { @class = "control-label", @style = "font-size:10px;" })
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    @Html.TextBoxFor(model => model.mTotalVatAmount, new { @class = "form-control", @id = "TotalVatAmount", @style = "text-align: right;" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    @Html.Label("Total Dues:", new { @class = "control-label", @style = "font-size:10px; text-align: right; width: 100%;" })
+                                </div>
+                                <div class="col-lg-7 col-md-7 col-sm-8 col-xs-8">
+                                    <input type="text" id="totalDues" style="text-align:right; background:#fff;" class="form-control" readonly="readonly" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="row" style="margin-top: 5px; margin-bottom: 5px;">
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    @Html.Label("Discount Amount:", new { @class = "control-label", @style = "font-size:10px;" })
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    @Html.TextBoxFor(model => model.mTotalDiscount, new { @class = "form-control", @id = "totalDiscount", @style = "text-align: right;" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    @Html.Label("Paid Amount:", new { @class = "control-label", @style = "font-size:10px; text-align: right; width: 100%;" })
+                                </div>
+                                <div class="col-lg-7 col-md-7 col-sm-8 col-xs-8">
+                                    @Html.TextBoxFor(model => model.mPaidAmount, new { @class = "form-control", @id = "PaidAmount", @style = "text-align: right;" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="row" style="margin-top: 5px; margin-bottom: 5px;">
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    @Html.Label("Dues:", new { @class = "control-label", @style = "font-size:10px; text-align: right; width: 100%;" })
+                                </div>
+                                <div class="col-lg-7 col-md-7 col-sm-8 col-xs-8">
+                                    <input type="text" id="NetDues" style="text-align: right; background: #fff;" class="form-control" readonly = "readonly" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top:10px;">
+                    <div class="row" style="margin-top: 5px; margin-bottom: 5px;">
+                        <div class="col-sm-4 col-xs-2"></div>
+                        <div class="col-sm-2 col-xs-4">
+                            <input type="button" value="Submit" id="btnSubmit" class="btn btn-success" style="width: 99%; max-width: 70px; float: right; font-size: 12px;" />
+                        </div>
+                        <div class="col-sm-2 col-xs-4">
+                            <input type="button" value="Reset" id="btnReset" class="btn btn-success" style="width: 99%; max-width: 70px; float: left; font-size: 12px;" />
+                        </div>
+                    </div>
+                </div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+</div>
+    @Html.HiddenFor(model => model.vReferenceNoAuto, new { @id = "vReferenceNoAuto" })
+    @section Scripts{
+        <script src="~/Scripts/PurchaseInfo_Script.js"></script>
+        <script type="text/javascript">
+            $('#PurchaseDate').datepicker({
+                dateFormat: 'dd-mm-yy',
+                showStatus: true,
+                showWeeks: true,
+                changeMonth: true,
+                changeYear: true,
+                showButtionPanel: true,
+                highlightWeek: true,
+                autoclose: true,
+                onSelect: function (dateText) {
+                    $(this).change();
+                }
+            }).on('change', function () {
+                $.ajax({
+                    url: '@Url.Action("getReferenceNo","PurchaseInfo")',
+                    type: 'GET',
+                    data: { dDate: $(this).val() },
+                    success: function (data) {
+                        $('#ReferenceNo').val(data.vReferenceNo);
+                    }
+                });
+            });
+
+            var productName = [];
+            var dupProduct = [];
+
+            function loadProductName(element) {
+                debugger;
+                var supplierID = $('#SupplierId').val();
+                //if (supplierID == 0)
+                //    supplierID = '%';
+                var packID = $('#PackId').val();
+                if (packID == 0)
+                    packID = '%';
+                $.ajax({
+                    url: '@Url.Action("GetAllProduct", "PurchaseInfo")',
+                    type: "GET",
+                    data: { supplierID: supplierID, packID: packID },
+                    success: function (data) {
+                        productName = data;
+                        renderProductName(element, productName);
+                    }
+                });
+            }
+
+            $('#paymentType').change(function () {
+                if($('#paymentType').val() == 'Çheque'){
+                    $('#bankName').show();
+                }
+                else {
+                    $('#bankName').hide();
+                }
+            });
+
+            @*$('#ChallanNo').change(function () {
+                if ($('#vReferenceNoAuto').val().length > 0)
+                {
+                    $.ajax({
+                        url: '@Url.Action("checkBillNo","PurchaseInfo")',
+                        type: 'POST',
+                        data: { challanNo: $(this).val(), referenceNo: $('#ReferenceNo').val() },
+                        success: function (data) {
+                            if (data.success) {
+                                $('#ChallanNo').val('');
+                                $('#ChallanNo').notify("Bill No. already exists!", "warn");
+                            }
+                        }
+                    });
+                }
+            });*@
+
+            function loadPreviousDues() {
+                debugger;
+                var vSupplierID = $('#SupplierId').val();
+                $.ajax({
+                    url: '@Url.Action("getPreviousDues", "PurchaseInfo")',
+                    type: "GET",
+                    data: { vSupplierID: vSupplierID },
+                    success: function (data) {
+                        $('#PreviousDues').val(isNaN(parseFloat(data.nPreviousDues)) ? 0.00 : data.nPreviousDues);
+                    }
+                });
+            }
+
+            function totalCalculation() {
+                var previousDues = 0.0;
+                if(!isNaN($('#PreviousDues').val()))
+                    previousDues = parseFloat($('#PreviousDues').val());
+
+                var amount = 0.0;
+                if (!isNaN(parseFloat($('#totalAmountValue').text())))
+                    amount = parseFloat($('#totalAmountValue').text());
+                $('#totalDues').val((previousDues + amount).toFixed(2));
+            }
+
+            $('#SupplierId').change(function () {
+                loadProductName($('#productID'));
+                loadPreviousDues();
+                totalCalculation();
+            });
+
+            $('#PackId').change(function () {
+                loadProductName($('#productID'));
+            });
+
+            $('#btnReset').click(function () {
+                window.location.href = '@Url.Action("Create", "PurchaseInfo")';
+            });
+
+            $('#PaidAmount').change(function () {
+                if (isNaN(parseFloat($(this).val())))
+                    $(this).val('0');
+                $('#NetDues').val((parseFloat($('#totalDues').val()) - parseFloat($(this).val())).toFixed(2));
+            });
+
+            $('#productID').change(function () {
+                debugger;
+                //$('#SupplierId').val('0');
+                $('#packName').text('');
+                $('#MaxQty').text('');
+                $('#MinQty').text('');
+                $('#currentStock').text('');
+                $('#SalesRate').text('');
+                $.getJSON('@Url.Action("GetProductData", "PurchaseInfo")', { vProductID: $(this).val(), purchaseDate: $('#PurchaseDate').val() }, function (res) {
+                    $('#packName').text(res.packID);
+                    $('#MaxQty').text(res.largeUnit);
+                    $('#MinQty').text(res.smallUnit);
+                    $('#currentStock').text(res.currentStock);
+                    $('#SalesRate').text(res.salesRate);
+                });
+            });
+
+            $('#luQty').change(function () {
+                purchaseRateCalculation();
+            });
+
+            $('#suQty').change(function () {
+                purchaseRateCalculation();
+            });
+
+            $('#vAmount').change(function () {
+                purchaseRateCalculation();
+            });
+
+            $('#VATPercentage').change(function () {
+                purchaseRateCalculation();
+                purchaseRateMainTable();
+                MainTableTotalCalculation();
+
+                var vatPer = (isNaN(parseFloat($(this).val())) ? 0 : parseFloat($(this).val()));
+                $('#TotalVatAmount').prop('disabled', false);
+                $('#TotalVatAmount').val($('#totalVAT').text());
+                if (vatPer > 0)
+                    $('#TotalVatAmount').prop('disabled', true);
+                $('#btnProceed').focus();
+            });
+
+            $('#discount').change(function () {
+                purchaseRateCalculation();
+            });
+
+            $('#totalDiscount').change(function () {
+                var discountAmount = parseFloat($('#totalDiscount').val());
+                var totalDiscount = 0.0;
+                var totalNetAmount = 0.0;
+                $('#tbProduct tbody').find('tr').each(function (i, event) {
+                    var $tdValue = $(this).find('td');
+                    $tdValue.eq(11).text(((parseFloat($tdValue.eq(10).text()) / parseFloat($('#totalVATWithAmount').text())) * parseFloat($('#totalDiscount').val())).toFixed(2));
+                    $tdValue.eq(12).text((parseFloat($tdValue.eq(10).text()) - parseFloat($tdValue.eq(11).text())).toFixed(2));
+                    $tdValue.eq(13).text((parseFloat($tdValue.eq(12).text()) / ((parseFloat($tdValue.eq(6).text()) * parseFloat($tdValue.eq(3).text()) * parseFloat($tdValue.eq(4).text())) + parseFloat($tdValue.eq(7).text()))).toFixed(2));
+                    totalDiscount += parseFloat($tdValue.eq(11).text());
+                    totalNetAmount += parseFloat($tdValue.eq(12).text());
+                });
+                $('#totalDiscountAmount').text(totalDiscount.toFixed(2));
+                $('#totalAmountValue').text(totalNetAmount.toFixed(2));
+                totalCalculation();
+            });
+
+            function purchaseRateCalculation() {
+                var luQty = 0.0;
+                var suQty = 0.0;
+                var amount = 0.0;
+                var discount = 0.0;
+                var vatPercentage = 0.0;
+                if (!isNaN(parseFloat($('#luQty').val()))) {
+                    luQty = parseFloat($('#luQty').val());
+                }
+                if (!isNaN(parseFloat($('#suQty').val()))) {
+                    suQty = parseFloat($('#suQty').val());
+                }
+                if (!isNaN(parseFloat($('#discount').val()))) {
+                    discount = parseFloat($('#discount').val());
+                }
+                if (!isNaN(parseFloat($('#vAmount').val()))) {
+                    amount = parseFloat($('#vAmount').val());
+                }
+                if (!isNaN(parseFloat($('#VATPercentage').val()))) {
+                    vatPercentage = parseFloat($('#VATPercentage').val());
+                }
+                if (luQty == 0 && suQty == 0) {
+                    $('#vAmount').val('');
+                }
+                else
+                {
+                    $('#vat').text(((amount * vatPercentage) / 100).toFixed(2));
+                    amount += parseFloat($('#vat').text());
+                    $('#vatAmount').text(amount);
+                    $('#totalNetAmount').text((amount - discount).toFixed(2));
+                    $('#purchaseRate').text(((amount - discount) / ((luQty * (parseFloat($('#MaxQty').text()) * parseFloat($('#MinQty').text()))) + suQty)).toFixed(3));
+                }
+            }
+
+            function purchaseRateMainTable() {
+                var vatPercentage = 0.0;
+                if (!isNaN(parseFloat($('#VATPercentage').val()))) {
+                    vatPercentage = parseFloat($('#VATPercentage').val());
+                }
+                $('#tbProduct tbody').find('tr').each(function (i, event) {
+                    var $tdValue = $(this).find('td');
+                    $tdValue.eq(9).text(((vatPercentage * parseFloat($tdValue.eq(8).text())) / 100).toFixed(2));
+                    $tdValue.eq(10).text((parseFloat($tdValue.eq(9).text()) + parseFloat($tdValue.eq(8).text())).toFixed(2));
+                    $tdValue.eq(12).text((parseFloat($tdValue.eq(10).text()) - parseFloat($tdValue.eq(11).text())).toFixed(2));
+                    $tdValue.eq(13).text((parseFloat($tdValue.eq(12).text()) / ((parseFloat($tdValue.eq(6).text()) * parseFloat($tdValue.eq(3).text()) * parseFloat($tdValue.eq(4).text())) + parseFloat($tdValue.eq(7).text()))).toFixed(2));
+                });
+            }
+
+            function MainTableTotalCalculation() {
+                var totalVat = 0.0;
+                var totalVatAmount = 0.0;
+                var totalDiscountAmount = 0.0;
+                var totalNetAmount = 0.0;
+
+                $('#tbProduct tbody').find('tr').each(function (i, event) {
+                    var $tdValue = $(this).find('td');
+
+                    totalVat += parseFloat($tdValue.eq(9).text());
+                    totalVatAmount += parseFloat($tdValue.eq(10).text());
+                    totalDiscountAmount += parseFloat($tdValue.eq(11).text());
+                    totalNetAmount += parseFloat($tdValue.eq(12).text());
+                });
+
+                $('#totalVAT').text(totalVat.toFixed(2));
+                $('#totalVATWithAmount').text(totalVatAmount.toFixed(2));
+                $('#totalDiscountAmount').text(totalDiscountAmount.toFixed(2));
+                $('#totalAmountValue').text(totalNetAmount.toFixed(2));
+            }
+
+            $('#btnAddEdit').click(function () {
+                var isAllValid = true;
+                if ($('#productID').val() == '0') {
+                    isAllValid = false;
+                    $('#productID').notify("Please select product Name!!!", "warn");
+                }
+                if (isNaN(parseFloat($('#luQty').val()))) {
+                    isAllValid = false;
+                    $('#luQty').notify("Please provide large unit qty!!!", "warn");
+                }
+                if (isNaN(parseFloat($('#suQty').val()))) {
+                    isAllValid = false;
+                    $('#suQty').notify("Please provide small unit qty!!!", "warn");
+                }
+                if (isNaN(parseFloat($('#vAmount').val()))) {
+                    isAllValid = false;
+                    $('#vAmount').notify("Please provide amount!!!", "warn");
+                }
+
+                if (parseFloat($('#purchaseRate').text()) > parseFloat($('#SalesRate').text())) {
+                    isAllValid = false;
+                    $.notify("Purchase rate is greater than sales rate. Please check!!!", "warn");
+                }
+
+                $.each(dupProduct, function (i, value) {
+                    if (value == $('#productID').val()) {
+                        isAllValid = false;
+                        $('#productID').notify('Product already exists in the list.', 'warn');
+                        $('#productID').val('0');
+                        $('#packName').text('');
+                        $('#MaxQty').text('');
+                        $('#MinQty').text('');
+                        $('#currentStock').text('');
+                        $('#luQty').val('');
+                        $('#suQty').val('');
+                        $('#vAmount').val('');
+                        $('#vat').text('');
+                        $('#vatAmount').text('');
+                        $('#discount').val('');
+                        $('#totalNetAmount').text('');
+                        $('#purchaseRate').text('');
+                        $('#SalesRate').text('');
+                        $('#productID').focus();
+                    }
+                });
+
+                if (isAllValid) {
+                    dupProduct.push($('#productID').val());
+                    $('#tbProduct tbody').append('<tr id = "mainRow">'+
+                        '<td style="display: none; font-size: 10px;" class="ProductID">' + $('#productID').val() + '</td>' +
+                        '<td style="font-size: 10px;" class="ProductName">' + $('#productID option:selected').text() + '</td>' +
+                        '<td style="font-size: 10px;" class="packName">' + $('#packName').text() + '</td>' +
+                        '<td style="font-size: 10px; text-align: right;" class="MaxQty">' + $('#MaxQty').text() + '</td>' +
+                        '<td style="font-size: 10px; text-align: right;" class="MinQty">' + $('#MinQty').text() + '</td>' +
+                        '<td style="font-size: 10px; text-align: right;" class="currentStock">' + $('#currentStock').text() + '</td>' +
+                        '<td style="font-size: 10px; text-align: right;" class="luQty">' + $('#luQty').val() + '</td>' +
+                        '<td style="font-size: 10px; text-align: right;" class="suQty">' + $('#suQty').val() + '</td>' +
+                        '<td style="font-size: 10px; text-align: right;" class="ProductAmount">' + $('#vAmount').val() + '</td>' +
+                        '<td style="font-size: 10px; text-align: right;" class="vat">' + $('#vat').text() + '</td>' +
+                        '<td style="font-size: 10px; text-align: right;" class="vatAmount">' + $('#vatAmount').text() + '</td>' +
+                        '<td style="font-size: 10px; text-align: right;" class="discount">' + (isNaN(parseFloat($('#discount').val())) ? '0' : parseFloat($('#discount').val())) + '</td>' +
+                        '<td style="font-size: 10px; text-align: right;" class="totalNetAmount">' + $('#totalNetAmount').text() + '</td>' +
+                        '<td style="font-size: 10px; text-align: right;" class="purchaseRate">' + $('#purchaseRate').text() + '</td>' +
+                        '<td style="font-size: 10px; text-align: right;" class="SalesRate">' + $('#SalesRate').text() + '</td>' +
+                        '<td><input type = "button" id = "btnRemove" class="btnRemove btn btn-danger" value = "Remove" style="font-size: 8px; width: 60px; margin-right: 10%;" /><input type = "button" id = "btnEdit" class="btnEdit btn btn-success" value = "Edit" style="font-size: 8px;  width: 60px;" /></td></tr>');
+                    var grandTotal = parseFloat($('#totalAmount').text());
+                    if (isNaN(grandTotal))
+                        grandTotal = 0.0;
+                    grandTotal += parseFloat($('#vAmount').val());
+                    $('#totalAmount').text(grandTotal.toFixed(2));
+
+                    var totalVat = (isNaN(parseFloat($('#totalVAT').text())) ? 0 : parseFloat($('#totalVAT').text()));
+                    if (isNaN(totalVat))
+                        totalVat = 0.0;
+                    totalVat += (isNaN(parseFloat($('#vat').text())) ? 0 : parseFloat($('#vat').text()));
+                    $('#totalVAT').text(totalVat.toFixed(2));
+
+                    var totalVatAmount = (isNaN(parseFloat($('#totalVATWithAmount').text())) ? 0 : parseFloat($('#totalVATWithAmount').text()));
+                    if (isNaN(totalVatAmount))
+                        totalVatAmount = 0.0;
+                    totalVatAmount += (isNaN(parseFloat($('#vatAmount').text())) ? 0 : parseFloat($('#vatAmount').text()));
+                    $('#totalVATWithAmount').text(totalVatAmount.toFixed(2));
+
+                    var totalDiscountAmount = (isNaN(parseFloat($('#totalDiscountAmount').text())) ? 0 : parseFloat($('#totalDiscountAmount').text()));
+                    if (isNaN(totalDiscountAmount))
+                        totalDiscountAmount = 0.0;
+                    totalDiscountAmount += (isNaN(parseFloat($('#discount').val())) ? 0 : parseFloat($('#discount').val()));
+                    $('#totalDiscountAmount').text(totalDiscountAmount.toFixed(2));
+
+                    var totalNetAmount = (isNaN(parseFloat($('#totalAmountValue').text())) ? 0 : parseFloat($('#totalAmountValue').text()));
+                    if (isNaN(totalNetAmount))
+                        totalNetAmount = 0.0;
+                    totalNetAmount += (isNaN(parseFloat($('#totalNetAmount').text())) ? 0 : parseFloat($('#totalNetAmount').text()));
+                    $('#totalAmountValue').text(totalNetAmount.toFixed(2));
+
+                    totalCalculation();
+                    $('#TotalVatAmount').prop('disabled', false);
+                    $('#TotalVatAmount').val($('#totalVAT').text());
+                    $('#TotalVatAmount').prop('disabled', true);
+                }
+                $('#productID').val('0');
+                $('#packName').text('');
+                $('#MaxQty').text('');
+                $('#MinQty').text('');
+                $('#currentStock').text('');
+                $('#luQty').val('');
+                $('#suQty').val('');
+                $('#vAmount').val('');
+                $('#vat').text('');
+                $('#vatAmount').text('');
+                $('#discount').val('');
+                $('#totalNetAmount').text('');
+                $('#purchaseRate').text('');
+                $('#SalesRate').text('');
+                $('#productID').focus();
+                loadProductName('#productID');
+            });
+
+            $('#tbProduct').on('click', '.btnRemove', function () {
+                var grandTotal = parseFloat($('#totalAmount').text());
+                grandTotal -= parseFloat($(this).parents('tr').find('.ProductAmount').text());
+                $('#totalAmount').text(grandTotal.toFixed(2));
+
+                var totalVat = parseFloat($('#totalVAT').text());
+                totalVat -= parseFloat($(this).parents('tr').find('.vat').text());
+                $('#totalVAT').text(totalVat.toFixed(2));
+
+                var totalVatAmount = parseFloat($('#totalVATWithAmount').text());
+                totalVatAmount -= parseFloat($(this).parents('tr').find('.vatAmount').text());
+                $('#totalVATWithAmount').text(totalVatAmount.toFixed(2));
+
+                var totalDiscount = parseFloat($('#totalDiscountAmount').text());
+                totalDiscount -= parseFloat($(this).parents('tr').find('.discount').text());
+                $('#totalDiscountAmount').text(totalDiscount.toFixed(2));
+
+                var totalNetAmount = parseFloat($('#totalAmountValue').text());
+                totalNetAmount -= parseFloat($(this).parents('tr').find('.totalNetAmount').text());
+                $('#totalAmountValue').text(totalNetAmount.toFixed(2));
+                $(this).parents('tr').remove();
+                dupProduct = [];
+                $('#tbProduct tbody').find('tr').each(function (i, event) {
+                    var $td = $(this).find('td');
+                    dupProduct.push($td.eq(0).text());
+                });
+                totalCalculation();
+            });
+
+            $('#tbProduct').on('click', '.btnEdit', function () {
+                $('#productID').val($(this).parents('tr').find('.ProductID').text());
+                $('#packName').text($(this).parents('tr').find('.packName').text());
+                $('#MaxQty').text($(this).parents('tr').find('.MaxQty').text());
+                $('#MinQty').text($(this).parents('tr').find('.MinQty').text());
+                $('#currentStock').text($(this).parents('tr').find('.currentStock').text());
+                $('#luQty').val($(this).parents('tr').find('.luQty').text());
+                $('#suQty').val($(this).parents('tr').find('.suQty').text());
+                $('#vAmount').val($(this).parents('tr').find('.ProductAmount').text());
+                $('#vat').text($(this).parents('tr').find('.vat').text());
+                $('#vatAmount').text($(this).parents('tr').find('.vatAmount').text());
+                $('#discount').val($(this).parents('tr').find('.discount').text());
+                $('#totalNetAmount').text($(this).parents('tr').find('.totalNetAmount').text());
+                $('#purchaseRate').text($(this).parents('tr').find('.purchaseRate').text());
+                $('#SalesRate').text($(this).parents('tr').find('.SalesRate').text());
+                var grandTotal = parseFloat($('#totalAmount').text());
+                grandTotal -= parseFloat($(this).parents('tr').find('.ProductAmount').text());
+                $('#totalAmount').text(grandTotal.toFixed(2));
+
+                var totalVat = parseFloat($('#totalVAT').text());
+                totalVat -= parseFloat($(this).parents('tr').find('.vat').text());
+                $('#totalVAT').text(totalVat.toFixed(2));
+
+                var totalVatAmount = parseFloat($('#totalVATWithAmount').text());
+                totalVatAmount -= parseFloat($(this).parents('tr').find('.vatAmount').text());
+                $('#totalVATWithAmount').text(totalVatAmount.toFixed(2));
+
+                var totalDiscount = parseFloat($('#totalDiscountAmount').text());
+                totalDiscount -= parseFloat($(this).parents('tr').find('.discount').text());
+                $('#totalDiscountAmount').text(totalDiscount.toFixed(2));
+
+                var totalNetAmount = parseFloat($('#totalAmountValue').text());
+                totalNetAmount -= parseFloat($(this).parents('tr').find('.totalNetAmount').text());
+                $('#totalAmountValue').text(totalNetAmount.toFixed(2));
+
+                $(this).parents('tr').remove();
+                dupProduct = $.grep(dupProduct, function (value) { return value != $('#productID').val(); });
+                totalCalculation()
+            });
+
+            $('#btnProceed').click(function () {
+                var date = $('#PurchaseDate').val();
+                var ReferenceNo = $('#ReferenceNo').val();
+                var vatPercentage = $('#VATPercentage').val();
+                debugger;
+                $('#tbProduct tbody').empty();
+                $('#totalAmount').text('0.00');
+                $('#totalVAT').text('0.00');
+                $('#totalVATWithAmount').text('0.00');
+                $('#totalDiscountAmount').text('0.00');
+                $('#totalAmountValue').text('0.00');
+                var tableData = [];
+                dupProduct = [];
+                var total_Amount = 0.0;
+                $.ajax({
+                    url: '@Url.Action("getDataForEdit", "PurchaseInfo")',
+                    data: { dDate: date, ReferenceNo: ReferenceNo, vatPercentage: vatPercentage, vChallanNo: $('#ChallanNo').val() },
+                    type: 'GET',
+                    success: function (data) {
+                        $('#SupplierId').val(data.masterData.vSupplierID);
+                        $('#PurchaseDate').val(data.masterData.dPurchaseDate);
+                        $('#ReferenceNo').val(data.masterData.vReferenceNo);
+                        $('#vReferenceNoAuto').val(data.masterData.vReferenceNoAuto);
+                        $('#VATPercentage').val(data.masterData.mVatPercent.toFixed(2));
+                        $('#totalAmount').text((isNaN(parseFloat(data.masterData.mTotalAmount)) ? 0 : parseFloat(data.masterData.mTotalAmount)).toFixed(2));
+                        $('#totalVAT').text((isNaN(parseFloat(data.masterData.mTotalVatAmount)) ? 0 : parseFloat(data.masterData.mTotalVatAmount)).toFixed(2));
+                        $('#TotalVatAmount').val((isNaN(parseFloat(data.masterData.mTotalVatAmount)) ? 0 : parseFloat(data.masterData.mTotalVatAmount)).toFixed(2));
+                        $('#totalDiscount').val((isNaN(parseFloat(data.masterData.mTotalDiscount)) ? 0 : parseFloat(data.masterData.mTotalDiscount)).toFixed(2));
+                        $('#totalVATWithAmount').text((parseFloat($('#totalAmount').text()) + parseFloat($('#totalVAT').text())).toFixed(2));
+                        $('#totalDiscountAmount').text((isNaN(parseFloat(data.masterData.mTotalDiscount)) ? 0 : parseFloat(data.masterData.mTotalDiscount)));
+                        $('#totalAmountValue').text((isNaN(parseFloat(data.masterData.mNetAmount)) ? 0 : parseFloat(data.masterData.mNetAmount)));
+                        $('#PreviousDues').val((isNaN(parseFloat(data.masterData.mPreviousDues)) ? 0 : data.masterData.mPreviousDues));
+                        $('#PaidAmount').val(data.masterData.mPaidAmount);
+                        tableData = data.detailData;
+                        $.each(tableData, function (i, value) {
+                            dupProduct.push(value.vProductID);
+                            $('#tbProduct').append('<tr id = "mainRow">' +
+                        '<td style="display: none; font-size: 10px;" class="ProductID">' + value.vProductID + '</td>' +
+                        '<td style="font-size: 10px;" class="ProductName">' + value.vProductName + '</td>' +
+                        '<td style="font-size: 10px;" class="packName">' + value.vPackName + '</td>' +
+                        '<td style="font-size: 10px; text-align: right;" class="MaxQty">' + value.mMaxQty + '</td>' +
+                        '<td style="font-size: 10px; text-align: right;" class="MinQty">' + value.mMinQty + '</td>' +
+                        '<td style="font-size: 10px; text-align: right;" class="currentStock">' + value.mCurrentStock + '</td>' +
+                        '<td style="font-size: 10px; text-align: right;" class="luQty">' + value.mLuQty + '</td>' +
+                        '<td style="font-size: 10px; text-align: right;" class="suQty">' + value.mSuQty + '</td>' +
+                        '<td style="font-size: 10px; text-align: right;" class="ProductAmount">' + value.mAmount + '</td>' +
+                        '<td style="font-size: 10px; text-align: right;" class="vat">' + value.mVat + '</td>' +
+                        '<td style="font-size: 10px; text-align: right;" class="vatAmount">' + (parseFloat(value.mAmount) + parseFloat(value.mVat)) + '</td>' +
+                        '<td style="font-size: 10px; text-align: right;" class="discount">' + value.mDiscount + '</td>' +
+                        '<td style="font-size: 10px; text-align: right;" class="totalNetAmount">' + value.mNetAmount + '</td>' +
+                        '<td style="font-size: 10px; text-align: right;" class="purchaseRate">' + value.mPurchaseRate + '</td>' +
+                        '<td style="font-size: 10px; text-align: right;" class="SalesRate">' + value.mSalesRate + '</td>' +
+                        '<td><input type = "button" id = "btnRemove" class="btnRemove btn btn-danger" value = "Remove" style="font-size: 8px; width: 60px; margin-right: 10%;" /><input type = "button" id = "btnEdit" class="btnEdit btn btn-success" value = "Edit" style="font-size: 8px;  width: 60px;" /></td></tr>');
+                        });
+                        totalCalculation();
+                        $('#NetDues').val((parseFloat($('#totalDues').val()) - parseFloat($('#PaidAmount').val())).toFixed(2));
+                    }
+                });
+
+                $('#SupplierId').prop('disabled', false);
+                $('#PackId').prop('disabled', false);
+                $('#productID').prop('disabled', false);
+                $('#luQty').prop('disabled', false);
+                $('#suQty').prop('disabled', false);
+                $('#vAmount').prop('disabled', false);
+                $('#discount').prop('disabled', false);
+                loadProductName($('#productID'));
+            });
+
+            @*$('#dealerID').change(function () {
+                $('#productID').prop('disabled', true);
+                $('#quantity').prop('disabled', true);
+                $('#tbProduct tbody').empty();
+                $('#totalAmount').text('0.0');
+
+                $.getJSON('@Url.Action("GETDealerData", "DealerOrderDelivery")', { dealerID: $('#dealerID').val() }, function (res) {
+                    $('#Dealer_Balance').text(res.dDealerBalance);
+                    $('#lblDealerLocation').text(res.vLocation);
+                    if (parseFloat(res.dDealerBalance) > 0.0)
+                        $('#lblDealerBalance').text(res.dDealerBalance + ' Dr');
+                    else if (parseFloat(res.dDealerBalance) < 0.0)
+                        $('#lblDealerBalance').text(Math.abs(parseFloat(res.dDealerBalance)) + ' Cr');
+                    $('#lblDealerUnit').text(res.vDealerUnit);
+                });
+            });*@
+
+            function validityCheck() {
+                var validity = false;
+                if($('#PurchaseDate').val()){
+                    if ($('#ChallanNo').val()) {
+                        if ($('#accountNo').val()) {
+                            if ($('#paymentType').val() == 'Cheque') {
+                                if ($('#bankName').val()) {
+                                    $('#tbProduct tbody').find('tr').each(function (i, event) {
+                                        var $td = $(this).find('td');
+                                        if (parseFloat($td.eq(13).text()) < parseFloat($td.eq(14).text())) {
+                                            validity = true;
+                                        }
+                                        else {
+                                            $.notify('Please check purchase rate & sale rate!', 'warn');
+                                            validity = false;
+                                        }
+                                    });
+                                } else {
+                                    $('#bankName').notify('Please provide bank name!', 'warn');
+                                    $('#bankName').focus();
+                                    validity = false;
+                                }
+                            }
+                            else {
+                                $('#tbProduct tbody').find('tr').each(function (i, event) {
+                                    var $td = $(this).find('td');
+                                    if (parseFloat($td.eq(13).text()) < parseFloat($td.eq(14).text())) {
+                                        validity = true;
+                                    }
+                                    else {
+                                        $.notify('Please check purchase rate & sale rate!', 'warn');
+                                        validity = false;
+                                    }
+                                });
+                            }
+                        } else {
+                            $('#accountNo').notify('Please provide account/cheque No.!', 'warn');
+                            $('#accountNo').focus();
+                            validity = false;
+                        }
+                    } else {
+                        $('#ChallanNo').notify('Please provide bill/challan no.!', 'warn');
+                        $('#ChallanNo').focus();
+                        validity = false;
+                    }
+                } else {
+                    $('#PurchaseDate').notify('Please provide purchase data!','warn');
+                    $('#PurchaseDate').focus();
+                    validity = false;
+                }
+                return validity;
+            }
+
+            var totalData = [];
+            $('#btnSubmit').click(function () {
+                $('#tbProduct tbody').find('tr').each(function (i, event) {
+                    var $td = $(this).find('td');
+                    totalData.push({ vProductID: $td.eq(0).text(), 
+                        mLuQty: ($td.eq(6).text()), 
+                        mSuQty: ($td.eq(7).text()), 
+                        mTotalQty: ((parseFloat($td.eq(6).text()) * parseFloat($td.eq(3).text()) * parseFloat($td.eq(4).text())) + parseFloat($td.eq(7).text())), 
+                        mAmount: ($td.eq(8).text()), 
+                        mVat: ($td.eq(9).text()),
+                        mDiscount: ($td.eq(11).text()), 
+                        mNetAmount: ($td.eq(12).text()), 
+                        mPurchaseRate: ($td.eq(13).text()), 
+                        mSalesRate: ($td.eq(14).text())
+                    });
+                });
+
+                debugger;
+                if (validityCheck()) {
+                    if (totalData.length != 0) {
+                        bootbox.confirm('Do you want to save this information?', function (result) {
+                            if (result) {
+                                $.ajax({
+                                    url: '@Url.Action("Create", "PurchaseInfo")',
+                                    type: "POST",
+                                    data: JSON.stringify({
+                                        vSupplierID: $('#SupplierId').val(),
+                                        dPurchaseDate: $('#PurchaseDate').val(),
+                                        vReferenceNoAuto: $('#vReferenceNoAuto').val(),
+                                        vReferenceNo: $('#ReferenceNo').val(),
+                                        vChallanNo: $('#ChallanNo').val(),
+                                        mVatPercent: $('#VATPercentage').val(),
+                                        mTotalAmount: $('#totalAmount').text(),
+                                        mTotalVatAmount: $('#totalVAT').text(),
+                                        mTotalDiscount: $('#totalDiscountAmount').text(),
+                                        mNetAmount: $('#totalAmountValue').text(),
+                                        mPaidAmount: $('#PaidAmount').val(),
+                                        vPaymentType: $('#paymentType').val(),
+                                        vAccount_ChequeNo: $('#accountNo').val(),
+                                        vBankName: $('#bankName').val(),
+                                        purchaseDetailList: totalData
+                                    }),
+                                    dataType: "JSON",
+                                    contentType: 'application/json',
+                                    success: function (response) {
+                                        totalData = [];
+                                        $.notify(response.message, "success");
+                                        window.setTimeout(function () { window.location.href = '@Url.Action("Create","PurchaseInfo")' }, 1000);
+                                    },
+                                    error: function () {
+                                        $.notify(response.message, "error");
+                                    }
+                                });
+                            }
+                        });
+                    }
+                }
+            });
+
+            @*$('#quantity').keyup(function (event) {
+                if (event.keyCode != 13) {
+                    if (!$.isNumeric($(this).val())) {
+                        $(this).val('');
+                    }
+                    if (!isNaN(parseFloat($(this).val()))) {
+                        if ($('#productID').val()) {
+                            var quantity = parseFloat($(this).val());
+                            var nRate = parseFloat($('#productRate').text());
+                            var qtyPerUnit = parseFloat($('#quantityMinimum').text());
+                            $.getJSON('@Url.Action("ProductDataFreeQty", "DealerOrderDelivery")', { ProductID: $('#productID').val(), totalQty: quantity * qtyPerUnit, dDate: $('#OrderDate').val() }, function (res) {
+                                $('#quantityFree').text(res.freeQty);
+                                if (quantity > 0.0) {
+                                    $('#nAmount').text((nRate * ((quantity * qtyPerUnit) - parseFloat($('#quantityFree').text()))).toFixed(2));
+                                }
+                            });
+                        } else {
+                            $('#quantity').val('');
+                        }
+                    } else {
+                        $('#quantity').val('');
+                        $('#nAmount').text('');
+                        $('#quantityFree').text('');
+                    }
+                }
+            });*@
+            loadProductName($('#productID'));
+        </script>
+    }

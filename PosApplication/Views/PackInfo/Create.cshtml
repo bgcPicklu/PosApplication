@@ -1,0 +1,119 @@
+﻿@using PosApplication.Models
+@model PosApplication.Models.PackSizeInfo
+
+<div style="margin-top: 90px;">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="panel panel-bd lobidisable">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h4>Pack Information</h4>
+                </div>
+            </div>
+            <div style="height:97%; width:100%; overflow:auto; padding:0; margin:0 auto; margin-left:10px; margin-top:10px;">
+                @Html.AntiForgeryToken()
+                @*@if (Session["AccountType"].ToString() == "Super Admin" || Session["AccountType"].ToString() == "Admin")
+                {*@
+                    <input type="button" id="btnFind" value="Find" class="btn btn-primary" />
+                @*}*@
+                <hr />
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top:10px;">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    @Html.Label("Pack ID:", new { @class = "control-label", @style = "font-size:10px;" })
+                                </div>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                    @Html.TextBoxFor(model => model.vPackID, new { @class = "form-control", @id = "packID", @readonly = "readonly", @style = "background: #fff;" })
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-top:5px;">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    @Html.Label("Pack Name:", new { @class = "control-label", @style = "font-size:10px;" })
+                                </div>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                    @Html.TextBoxFor(model => model.vPackName, new { @class = "form-control", @id = "packName" })
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-top:5px;">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    @Html.Label("Status:", new { @class = "control-label", @style = "font-size:10px;" })
+                                </div>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                    @Html.DropDownListFor(model => model.vStatus, new SelectList(DropDownListModel.GetStatus, "Value", "Text", "Active"), new { @class = "form-control", @id = "vStatus" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row" style="margin-bottom:10px;">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"></div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                            <input type="button" id="btnSave" value="Save" class="btn btn-success pull-right" style="" />
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                            <input type="button" id="btnReset" value="Reset" class="btn btn-primary pull-left" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.HiddenFor(model => model.vPackIDAuto, new { @id = "vPackIDAuto" })
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#btnFind').click(function () {
+                window.location.href = '@Url.Action("Index","PackInfo")';
+            });
+
+            function formCheck() {
+                if ($('#packName').val()) {
+                    return true;
+                }
+                else {
+                    $('#packName').notify('Please provide pack size name.!', 'warn');
+                    $('#packName').focus();
+                    return false;
+                }                    
+            }
+
+            $('#btnSave').click(function () {
+                if (formCheck()) {
+                    bootbox.confirm("Do you want to save this information?", function (result) {
+                        if (result) {
+                            var data = new FormData;
+                            data.append('vPackIDAuto', $('#vPackIDAuto').val());
+                            data.append('vPackID', $('#packID').val());
+                            data.append('vPackName', $('#packName').val());
+                            data.append('vStatus', $('#vStatus').val());
+                            $.ajax({
+                                type: 'POST',
+                                url: '@Url.Action("Create", "PackInfo")',
+                                data: data,
+                                contentType: false,
+                                processData: false,
+                                success: function (response) {
+                                    if (response.success) {
+                                        $.notify(response.message, 'success');
+                                    }
+                                    else {
+                                        $.notify(response.message, 'error');
+                                    }
+                                    window.setTimeout(function () { window.location.href = '@Url.Action("Index", "PackInfo")' }, 1000);
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+
+            $('#btnReset').click(function () {
+                window.location.href = '@Url.Action("Create", "PackInfo")';
+            });
+        });
+    </script>
+}

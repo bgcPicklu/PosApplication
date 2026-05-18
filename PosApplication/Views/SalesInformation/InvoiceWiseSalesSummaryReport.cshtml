@@ -1,0 +1,93 @@
+﻿@using PosApplication.Models
+@model PosApplication.Models.ReportModel
+
+<div style="margin-top: 90px;">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="margin: auto;">
+        <div class="panel panel-bd lobidisable">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h4>Invoice Wise Sales Summary</h4>
+                </div>
+            </div>
+            <div style="height:97%; width:100%; overflow:auto; padding:0; margin:0 auto; margin-left:10px; margin-top:10px;">
+                @Html.AntiForgeryToken()
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top:10px;">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top:5px;">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top:5px;">
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        <label style="font-size:12px;">From Date :</label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        @Html.TextBoxFor(model => model.dFromDate, new { @class = "form-control", @id = "FromDate", @readonly = "readonly", @style = "background: #fff;" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top:5px;">
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        <label style="font-size:12px;">To Date :</label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        @Html.TextBoxFor(model => model.dToDate, new { @class = "form-control", @id = "ToDate", @readonly = "readonly", @style = "background: #fff;" })
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top:5px; margin-bottom:10px;">
+                                <div class="row">
+                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9"></div>
+                                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                                        <input type="button" id="btnPreview" class="btn btn-primary" value="Preview" style="font-size:10px; font-weight:bold; margin-left: 27px;" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var productName = [];
+            $('#FromDate, #ToDate').datepicker({
+                dateFormat: 'dd-mm-yy',
+                showStatus: true,
+                showWeeks: true,
+                changeMonth: true,
+                changeYear: true,
+                showButtionPanel: true,
+                highlightWeek: true,
+                autoclose: true
+            });
+
+            $('#btnPreview').click(function () {
+                var dFromDate = $('#FromDate').val();
+                var dToDate = $('#ToDate').val();
+                debugger;
+
+                if (dFromDate !== "" && dToDate != "") {
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("InvoiceWiseSalesSummaryReport", "SalesInformation")",
+                        data: {
+                            dFromDate: dFromDate,
+                            dToDate: dToDate
+                        },
+                        success: function (response) {
+                            window.location.href = "@Url.Action("Details", "SalesInformation")";
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}

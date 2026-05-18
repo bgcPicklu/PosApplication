@@ -1,0 +1,47 @@
+﻿@using PosApplication.Models;
+@model PosApplication.Models.LoginViewModel
+
+@{
+    ViewBag.Title = "Log in.";
+}
+
+<link href="~/Content/assets/loginStyle.css" rel="stylesheet" />
+<div class="blurred-box">
+    @*style="margin-top:100px;"*@
+    <br />
+    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { /*@class = "login",*/ role = "form" }))
+    {
+        @*<h2>@ViewBag.Title</h2>*@
+        <br />
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        
+        <div class="user-login-box">
+            <span class="user-icon"></span>
+            @Html.DropDownListFor(m => m.UnitID, new SelectList(DropDownListModel.GetUnitName,"Value","Text","0"), new { @class = "form-control", @Style = "width:80%;", @placeholder = "Enter User Name" })
+            @Html.ValidationMessageFor(m => m.UserName)
+        </div>
+        <div class="user-login-box">
+            @*<span class="user-icon"></span>*@
+            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @Style = "width:80%;", @placeholder = "Enter User Name" })
+            @Html.ValidationMessageFor(m => m.UserName)
+        </div>
+        <div class="user-login-box">
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Enter Password", @style = "width:80%;" })
+            @Html.ValidationMessageFor(m => m.Password)
+        </div>
+        <div class="user-login-box" style="padding-bottom:20px;">
+            <div class="col-md-offset-2 col-md-12" style="width:78%;">
+                <input type="submit" value="Log in" class="btn pull-right" style="width: 90px; background: #394e8a; font-weight: bold; color: #ffe; " />
+            </div>
+        </div>
+    }
+    @*<div class="user-login-box">
+        <a href="http://www.meridiangroupbd.com/" target="_blank" style="width:80px; height:80px;"><img src="../Content/images/websiteIcon.jpg" alt="www.meridiangroupbd.com" width="75" height="75" style="border-radius:50%; left:50%;" /></a>
+        <p style="font-weight: bold; color: #ffffff; text-align: center;">Visit Our Website</p>
+    </div>*@
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

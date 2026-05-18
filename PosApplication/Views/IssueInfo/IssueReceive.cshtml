@@ -1,0 +1,204 @@
+﻿@using PosApplication.Models;
+@model PosApplication.Models.IssueMasterModel
+<div style="margin-top: 90px;">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin: auto;">
+        <div class="panel panel-bd lobidisable">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h4>Issue Receive</h4>
+                </div>
+            </div>
+            <div style="height:97%; width:100%; overflow:auto; padding:0; margin:0 auto; margin-left:10px; margin-top:10px;">
+                @Html.AntiForgeryToken()
+                <input type="button" id="btnFind" value="Find" class="btn btn-primary" />
+                <hr />
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top:10px;">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top:10px;">
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4">
+                                        @Html.Label("Issue No:", new { @class = "control-label", @style = "font-size:10px;" })
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        @Html.DropDownListFor(model => model.vIssueNo, new SelectList(DropDownListModel.GetIssueNo,"Value","Text","0"), new { @class = "form-control", @id = "IssueNo" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4">
+                                        @Html.Label("Issue Date:", new { @class = "control-label", @style = "font-size:10px;" })
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        @Html.TextBoxFor(model => model.dIssueDate, new { @class = "form-control", @id = "IssueDate", @readonly = "readonly", @style = "background: #fff;" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top:10px;">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top:10px;">
+                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        @Html.Label("Issued By:", new { @class = "control-label", @style = "font-size:10px;" })
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        @Html.TextBoxFor(model => model.vIssuedBy, new { @class = "form-control", @id = "IssuedBy", @readonly = "readonly", @style = "background: #fff;" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        @Html.Label("Issue To:", new { @class = "control-label", @style = "font-size:10px;" })
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        @Html.TextBoxFor(model => model.vIssueTo, new { @class = "form-control", @id = "IssueTo", @readonly = "readonly", @style = "background: #fff;" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        @Html.Label("Received By:", new { @class = "control-label", @style = "font-size:10px;" })
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        @Html.TextBoxFor(model => model.vReceivedBy, new { @class = "form-control", @id = "ReceivedBy", @readonly = "readonly", @style = "background: #fff;" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top:10px;">
+                    <div class="row" style="max-height: 500px; overflow: auto;">
+                        <table class="table table-responsive table-striped table-bordered table-hover table-condensed" id="tbProduct" style="width: 98%;">
+                            <thead style="background: #1088b9; color: white;">
+                                <tr>
+                                    <th style="display: none; font-size: 8px;">Product ID</th>
+                                    <th style="text-align: center; width: 18%; font-size: 8px;">Product Name</th>
+                                    <th style="text-align: center; width: 4%; font-size: 8px;">Pack</th>
+                                    <th style="text-align: center; width: 6%; font-size: 8px;">Max Qty</th>
+                                    <th style="text-align: center; width: 6%; font-size: 8px;">Min Qty</th>
+                                    <th style="text-align: center; width: 6%; font-size: 8px;">C.Stock</th>
+                                    <th style="text-align: center; width: 6%; font-size: 8px; ">LU Qty.</th>
+                                    <th style="text-align: center; width: 6%; font-size: 8px;">SU Qty.</th>
+                                    <th style="text-align: center; width: 5%; font-size: 8px;">P.Rate</th>
+                                    <th style="text-align: center; width: 5%; font-size: 8px;">S.Rate</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="9" style="width: 100%; text-align: right; font-size: 10px;"></td>
+                                </tr>
+                            </tfoot>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="row">
+                        <div class="col-lg-1 col-md-1 col-sm-4 col-xs-4">
+                            @Html.Label("Remarks:", new { @class = "control-label", @style = "font-size:10px;" })
+                        </div>
+                        <div class="col-lg-10 col-md-10 col-sm-8 col-xs-8">
+                            @Html.TextBoxFor(model => model.vRemarks, new { @class = "form-control", @id = "Remarks", @readonly = "readonly", @style="background: #fff;" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top:10px;">
+                    <div class="row" style="margin-top: 5px; margin-bottom: 5px;">
+                        <div class="col-sm-4 col-xs-2"></div>
+                        <div class="col-sm-2 col-xs-4">
+                            <input type="button" value="Submit" id="btnSubmit" class="btn btn-success" style="width: 99%; max-width: 70px; float: right; font-size: 12px;" />
+                        </div>
+                        <div class="col-sm-2 col-xs-4">
+                            <input type="button" value="Reset" id="btnReset" class="btn btn-success" style="width: 99%; max-width: 70px; float: left; font-size: 12px;" />
+                        </div>
+                    </div>
+                </div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.HiddenFor(model => model.vReferenceNoAuto, new { @id = "vReferenceNoAuto" })
+@section Scripts{
+    <script type="text/javascript">
+        $('#IssueNo').change(function () {
+            var date = $('#PurchaseDate').val();
+            var ReferenceNo = $('#ReferenceNo').val();
+            debugger;
+            $('#tbProduct tbody').empty();
+            var tableData = [];
+            dupProduct = [];
+            var total_Amount = 0.0;
+            $.ajax({
+                url: '@Url.Action("getIssueReceiveData", "IssueInfo")',
+                data: { dDate: date, ReferenceNo: ReferenceNo, vIssueNo: $('#IssueNo').val() },
+                type: 'GET',
+                success: function (data) {
+                    $('#IssueDate').val(data.masterData.dIssueDate);
+                    $('#ReferenceNo').val(data.masterData.vReferenceNo);
+                    $('#vReferenceNoAuto').val(data.masterData.vReferenceNoAuto);
+                    $('#IssueNo').val(data.masterData.vIssueNo);
+                    $('#IssuedBy').val(data.masterData.vIssuedBy);
+                    $('#IssueTo').val(data.masterData.vIssueTo);
+                    $('#ReceivedBy').val(data.masterData.vReceivedBy);
+                    $('#Remarks').val(data.masterData.vRemarks);
+                    tableData = data.detailData;
+                    $.each(tableData, function (i, value) {
+                        dupProduct.push(value.vProductID);
+                        $('#tbProduct').append('<tr id = "mainRow">' +
+                    '<td style="display: none; font-size: 10px;" class="ProductID">' + value.vProductID + '</td>' +
+                    '<td style="font-size: 10px;" class="ProductName">' + value.vProductName + '</td>' +
+                    '<td style="font-size: 10px;" class="packName">' + value.vPackName + '</td>' +
+                    '<td style="font-size: 10px; text-align: right;" class="MaxQty">' + value.mMaxQty + '</td>' +
+                    '<td style="font-size: 10px; text-align: right;" class="MinQty">' + value.mMinQty + '</td>' +
+                    '<td style="font-size: 10px; text-align: right;" class="currentStock">' + value.mCurrentStock + '</td>' +
+                    '<td style="font-size: 10px; text-align: right;" class="luQty">' + value.mLuQty + '</td>' +
+                    '<td style="font-size: 10px; text-align: right;" class="suQty">' + value.mSuQty + '</td>' +
+                    '<td style="font-size: 10px; text-align: right;" class="PurchaseRate">' + value.mIssueRate + '</td>' +
+                    '<td style="font-size: 10px; text-align: right;" class="SalesRate">' + value.mSalesRate + '</td></tr>');
+                    });
+                }
+            });
+
+            $('#SupplierId').prop('disabled', false);
+            $('#PackId').prop('disabled', false);
+            $('#productID').prop('disabled', false);
+            $('#luQty').prop('disabled', false);
+            $('#suQty').prop('disabled', false);
+        });
+
+        $('#btnSubmit').click(function () {
+            bootbox.confirm('Do you want to save this information?', function (result) {
+                if (result) {
+                    $.ajax({
+                        url: '@Url.Action("IssueReceive", "IssueInfo")',
+                        type: "POST",
+                        data: { vReferenceNo: $('#IssueNo').val() },
+                        success: function (response) {
+                            if (response.success)
+                            {
+                                $.notify(response.message, "success");
+                                window.setTimeout(function () { window.location.href = '@Url.Action("IssueReceive", "IssueInfo")' }, 1000);
+                            }
+                            else {
+                                $.notify(response.message, "error");
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}

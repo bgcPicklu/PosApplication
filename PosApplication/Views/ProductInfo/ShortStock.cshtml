@@ -1,0 +1,13 @@
+﻿@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("ShortStock", "ProductInfo")",
+            success: function (response) {
+                window.location.href = "@Url.Action("Details", "ProductInfo")";
+            }
+        });
+        });
+    </script>
+}

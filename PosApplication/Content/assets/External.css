@@ -1,0 +1,164 @@
+﻿/*<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+<style type="text/css">*/
+/*body{
+	padding:50px;
+}*/
+
+.client{
+    font-family: 'Open Sans Condensed', arial, sans;
+	height: 550px;
+    width: 950px;
+    padding: 30px;
+    background: #FFFFFF;
+	border: 1px solid #184488;
+    border-radius:4px;
+    margin: 0 auto;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+    -moz-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+    -webkit-box-shadow:  0px 0px 15px rgba(0, 0, 0, 0.22);
+}
+
+#left{
+    float : left;
+    width : 47%;
+}
+
+#right{
+    float : right;
+    width : 45%;
+}
+
+/*.input-control{
+    display:block;
+    width:100%;
+    height:34px;
+    padding:6px 12px;
+    font-size:14px;
+    line-height:1.42857143;
+    color:#555;
+    background-color:#fff;
+    background-image:none;
+    border:1px solid #ccc;
+    border-radius:4px;
+    -webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow:inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition:border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s
+}
+
+.input-control:focus{
+    border-color:#66afe9;
+    outline:0;
+    -webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+    box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6)
+}*/
+
+.client h2{
+    background: #184488;
+    text-transform: uppercase;
+    font-family: 'Open Sans Condensed', sans-serif;
+	width:106.75% !important;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: bold;
+	text-align: right;
+    padding: 20px;
+    margin: -30px -30px 30px -30px;
+}
+
+.client input[type="text"],
+.client input[type="password"]{
+    margin:-5px auto;
+    padding: 0px;
+    /*width: 100%;*/
+    float:right;
+}
+
+.login{
+    font-family: 'Open Sans Condensed', arial, sans;
+	height: 300px;
+    width: 450px;
+    padding: 30px;
+    background: #FFFFFF;
+	border: 1px solid #184488;
+    border-radius:4px;
+    margin: 0 auto;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+    -moz-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+    -webkit-box-shadow:  0px 0px 15px rgba(0, 0, 0, 0.22);
+
+}
+
+.login h2{
+    background: #184488;
+    text-transform: uppercase;
+    font-family: 'Open Sans Condensed', sans-serif;
+	width:115.5% !important;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: bold;
+	text-align: right;
+    padding: 20px;
+    margin: -30px -30px 30px -30px;
+}
+
+.login input[type="text"],
+.login input[type="password"]{
+    margin:-5px auto;
+    padding: 0px;
+    width: 100%;
+    float:right;
+}
+/*.form-style-8 input[type="text"],
+.form-style-8 input[type="date"],
+.form-style-8 input[type="datetime"],
+.form-style-8 input[type="email"],
+.form-style-8 input[type="number"],
+.form-style-8 input[type="search"],
+.form-style-8 input[type="time"],
+.form-style-8 input[type="url"],
+.form-style-8 input[type="password"],
+.form-style-8 textarea,
+.form-style-8 select 
+{
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    outline: none;
+    display: block;
+    width: 200px;
+    padding: 7px;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    background: transparent;
+    margin-bottom: 10px;
+    font: 16px Arial, Helvetica, sans-serif;
+    height: 45px;
+}
+.form-style-8 textarea{
+    resize:none;
+    overflow: hidden;
+}*/
+/*.login input[type="button"], 
+.login input[type="submit"]{
+    -moz-box-shadow: inset 0px 1px 0px 0px #45D6D6;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #45D6D6;
+    box-shadow: inset 0px 1px 0px 0px #45D6D6;
+    background-color: #2CBBBB;
+    border: 1px solid #27A0A0;
+    display: inline-block;
+    cursor: pointer;
+    color: #FFFFFF;
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 14px;
+    padding: 8px 18px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+.login input[type="button"]:hover, 
+.login input[type="submit"]:hover {
+    background:linear-gradient(to bottom, #34CACA 5%, #30C9C9 100%);
+    background-color:#34CACA;
+}*/
+/*</style>*/
